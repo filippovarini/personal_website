@@ -1,0 +1,57 @@
+---
+title: Hello! I am Filippo
+description: landing page for personal website of Filippo Varini fvarini
+template: splash
+hero:
+  tagline: Machine Learning Researcher for Ocean Conservation
+  image:
+    file: ../../assets/profile.jpeg
+  actions:
+    - text: Contact Me
+      link: mailto:fppvrn@gmail.com
+      icon: email
+      variant: primary
+banner:
+  content: |
+    We are deploying SharkTrack in more than 5 countries.
+    <a href="/projects/sharktrack/">Check it out!</a>
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Projects
+
+
+<CardGrid stagger>
+	<LinkCard
+	title="🦈 SharkTrack"
+	description="An AI-Enhanced Pipeline to analyse videos (BRUVS) of Sharks and Rays in near-instant time."
+	href="/projects/sharktrack/"
+	target="_blank"
+	/>
+	<LinkCard
+	title="🌎 Climate Pre Accelerator"
+	description="I founded a university accelerator that launched 30 climate tech startups so far."
+	href="https://www.forbes.com/sites/mariannelehnis/2023/03/02/why-imperial-college-launched-a-climatetech-pre-accelerator/"
+	target="_blank"
+	/>
+	<LinkCard
+	title="📈 CDR.FYI"
+	description="A data dashboard bringing transparency to the Carbon Dioxide Removal (CDR) market."
+	href="https://www.cdr.fyi/"
+	target="_blank"
+	back
+	/>
+</CardGrid>
+
+## Ocean AI Consultancy
+
+I offer different consultancy for developing Machine Learning systems for Ocean Conservation. If you are interested, please email me [here](mailto:fppvrn@gmail.com)
+
+
+<CardGrid stagger>
+	<Card title="Scoping" icon="magnifier">We scope out your Ocean AI project and device a development plan and concrete first action to get you closer to your end goal.</Card>
+	<Card title="Grant Writing" icon="open-book">If you are applying for a grant in AI for Ocean Conservation, I help you structure and review the technological sections based on my experience.</Card>
+	<Card title="Custom SharkTrack Deployment" icon="laptop">I can train SharkTrack to detect specific species of sharks and rays and fully automate video analysis.</Card>
+	<Card title="Full Ocean AI Project" icon="rocket">I support scoping, designing and developing an end-to-end Machine Learning system for Ocean Conservation.</Card>
+</CardGrid>
