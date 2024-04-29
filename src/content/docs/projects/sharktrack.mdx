@@ -12,18 +12,19 @@ hero:
         link: https://github.com/filippovarini/sharktrack?tab=readme-ov-file#sharktrack
         icon: open-book
         variant: primary
-      - text: Check it on GitHub
-        link: https://github.com/filippovarini/sharktrack
-        icon: github
+      - text: Reach out
+        link: mailto:fppvrn@gmail.com
+        icon: email
 ---
+import { Aside } from '@astrojs/starlight/components';
 
 
-
-# SharkTrack
+# SharkTrack Overview
 *Speeding up Elasmobranch BRUVS processing by 20x...*
 
-[![watrch video](../../../assets/video_screenshot.png)](https://drive.google.com/file/d/1ckda-Qevnlos5Aw3aUFTQXHx4Z-mprlu/view?usp=sharing)
-*Click on the image above to watch a demo*
+<iframe width="420" height="315"
+src="https://www.youtube.com/embed/vMk-_t5a-ao">
+</iframe>
 
 
 ## Contents
@@ -37,6 +38,7 @@ hero:
 * <a href="#collaborations">Collaborations</a>
 * <a href="#next-stpes">Next Steps</a>
 
+<Aside type="tip"> Jump to the [User Guide](https://github.com/filippovarini/sharktrack/blob/master/sharktrack-user-guide.md) to get started </Aside>
 
 
 ## Overview
@@ -55,6 +57,9 @@ What this jargon means is that it does the following steps:
 3. Provides a workflow for users to quickly clean detections and assign species ID.
 
 Basically, its goal is to allow researchers to spend time *only* classifying shark species, saving the majority of time spent looking at empty frames.
+
+![](../../../assets/test-output/detections/5.jpg)
+*Example image showing the video and time of the red detection*
 
 
 ## How is it useful?
