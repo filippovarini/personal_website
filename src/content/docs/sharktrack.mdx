@@ -4,29 +4,27 @@ description: sharktrack, an AI-enhanced pipeline to analyse BRUVS videos of shar
 template: splash
 
 hero:
-  tagline: An AI-Enhanced Pipeline to analyse videos (BRUVS) of Sharks and Rays in near-instant time.
+  tagline: An AI-Enhanced Pipeline to analyse in near-instant time underwater videos (BRUVS) of sharks, rays and more!
   image: 
-    file: ../../../assets/detection_example.png
+    file: ../../assets/detection_example.png
   actions:
       - text: Get Started
         link: https://github.com/filippovarini/sharktrack?tab=readme-ov-file#sharktrack
         icon: open-book
         variant: primary
-      - text: Compute MaxN
-        link: https://sharktrack.wildflow.ai/
-        icon: magnifier
+      - text: Email me
+        link: mailto:fppvrn@gmail.com
+        icon: email
+        variant: secondary
 ---
 import { Aside } from '@astrojs/starlight/components';
 
 
-# SharkTrack Overview
-*Speeding up Elasmobranch BRUVS processing by 20x...*
-
-<iframe width="420" height="315"
-src="https://www.youtube.com/embed/vMk-_t5a-ao">
-</iframe>
-
-
+SharkTrack is an AI-enhanced software used by researchers [worldwide](#list-of-people-using-it) to analyse BRUVS videos 33 times faster.
+### SharkTrack Trailer
+<div>
+<iframe width="560" height="315" src="https://youtu.be/NeBcpscTc3M" title="SharkTrack Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 ## Contents
 
 * <a href="#overview">Overview</a>
@@ -58,7 +56,7 @@ What this jargon means is that it does the following steps:
 
 Basically, its goal is to allow researchers to spend time *only* classifying shark species, saving the majority of time spent looking at empty frames.
 
-![](../../../assets/test-output/detections/5.jpg)
+![](../../assets/test-output/detections/5.jpg)
 *Example image showing the video and time of the red detection*
 
 
@@ -94,17 +92,27 @@ If that is of interest for you, please read the [Bespoke Deployment](#bespoke-de
 Whether you're going to run SharkTrack on your own or work with us, usually the first step with a new user is just running our model on a short BRUVS video and seeing what happens, so if you're interested in trying this on your BRUVS, we can work out a way to transfer a set of example images, just [email us](mailto:fppvrn@gmail.com?subject=SharkTrack-Pilot).
 
 ## List of people using it
-- [University of Exeter](https://www.linkedin.com/posts/filippo-varini_we-are-back-from-university-of-exeter-activity-7167899292593065985-dZLo?utm_source=share&utm_medium=member_desktop)
-- [Shark Research Institute Mexico](https://www.sharkresearchmexico.com/) 
+![](../../assets/deployment_locations.png)
+SharkTrack is currently being used by the following organisations and in the following locations:
+- Anguilla, by the [University of Exeter](https://www.linkedin.com/posts/filippo-varini_we-are-back-from-university-of-exeter-activity-7167899292593065985-dZLo?utm_source=share&utm_medium=member_desktop)
+- Revillagigedo Archipelago, Mexico, by [Pelagios Kakunja](https://pelagioskakunja.org/)
+- La Paz, Mexico, by [Pelagios Kakunja](https://pelagioskakunja.org/)
+- Gulf of California, Mexico, by [Pelagios Kakunja](https://pelagioskakunja.org/)
+- Maldives, by the [University of Leeds](http://theses.ncl.ac.uk/jspui/handle/10443/5710)
+- Boston, by the [Virginia Tech University](http://seaql.org/)
+- Hawaii, by the [Virginia Tech University](http://seaql.org/)
+- Cabo Verde, by Dr. Francesco Garzon, University of Exeter
+- Red Sea, by Dr. Francesco Garzon, University of Exeter
+
 
 
 ## Contributors
 This software was written and supported by the efforts of
 - [Filippo Varini](https://www.linkedin.com/in/filippo-varini/)
 - [Sophie Wilday](https://www.linkedin.com/in/sophie-wilday-889663b9/)
-- [Jeremy Jenrette](https://jeremyjenrette.weebly.com/)
-- [Dr Joel Gayford](https://www.sharkmeasurements.com/)
 - [Prof Ben Glocker](https://www.imperial.ac.uk/people/b.glocker)
+- [Dr Joel Gayford](https://www.sharkmeasurements.com/)
+- [Jeremy Jenrette](https://jeremyjenrette.weebly.com/)
 - [Prof Francesco Ferretti](https://ferrettigs.github.io/)
 
 We would also like to thank [Natalie Ng](https://www.linkedin.com/in/natalie-ng-951964255/), [Rui Wen Lim](https://www.linkedin.com/in/rui-wen-lim-223140235/), [Michael Sellgren](https://www.linkedin.com/in/michael-sellgren/), [Lara Tse](https://www.linkedin.com/in/lara-tse-264505209), [Steven Chen](https://www.linkedin.com/in/stevenchenwaiho), [Maria Pia Donrelas](https://www.linkedin.com/in/maria-pia-dornelas-cysneiros-6221a5230), Manfredi Minervini, [Xuen Bei (Bay) Chin](https://www.linkedin.com/in/bay-chin-36672b1a7/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app) for their invaluable contribution!
