@@ -3,7 +3,7 @@ title: Hello! I am Filippo
 description: landing page for personal website of Filippo Varini fvarini
 template: splash
 hero:
-  tagline: Machine Learning Researcher for Ocean Conservation
+  tagline: I am Machine Learning Researcher for Ocean Conservation. I love connecting to the ocean through any means, from freediving to computing. Share with me your ways to connect!
   image:
     file: ../../assets/profile.jpeg
   actions:
@@ -13,11 +13,12 @@ hero:
       variant: primary
 banner:
   content: |
-    We are deploying SharkTrack in more than 5 countries.
+    SharkTrack is deployed in more than 8 locations.
     <a href="/sharktrack/">Check it out!</a>
 ---
 
 import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
 ## Projects
 
@@ -31,13 +32,13 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 	/>
 	<LinkCard
 	title="🌎 Climate Pre Accelerator"
-	description="I founded a university accelerator that launched 30 climate tech startups so far."
+	description="I founded a university accelerator that launched 30 climate tech startups. It was featured in Forbes and nominated Climate Innovator by UNICEF."
 	href="https://www.forbes.com/sites/mariannelehnis/2023/03/02/why-imperial-college-launched-a-climatetech-pre-accelerator/"
 	target="_blank"
 	/>
 	<LinkCard
 	title="📈 CDR.FYI"
-	description="A data dashboard bringing transparency to the Carbon Dioxide Removal (CDR) market."
+	description="A data dashboard bringing transparency to the Carbon Dioxide Removal (CDR) market. It now has more than 10k monthly users and was featured in the Wall Street Journaly and Yahoo Finance."
 	href="https://www.cdr.fyi/"
 	target="_blank"
 	back
@@ -46,12 +47,24 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 ## Ocean AI Consultancy
 
-I offer different consultancy for developing Machine Learning systems for Ocean Conservation. If you are interested, please email me [here](mailto:fppvrn@gmail.com)
+I offer consultancy services for developing Machine Learning systems for Ocean Conservation. If you are interested, please email me [here](mailto:fppvrn@gmail.com)
 
 
 <CardGrid stagger>
-	<Card title="Scoping" icon="magnifier">We scope out your Ocean AI project and device a development plan and concrete first action to get you closer to your end goal.</Card>
-	<Card title="Grant Writing" icon="open-book">If you are applying for a grant in AI for Ocean Conservation, I help you structure and review the technological sections based on my experience.</Card>
-	<Card title="Custom SharkTrack Deployment" icon="laptop">I can train SharkTrack to detect specific species of sharks and rays and fully automate video analysis.</Card>
-	<Card title="Full Ocean AI Project" icon="rocket">I support scoping, designing and developing an end-to-end Machine Learning system for Ocean Conservation.</Card>
+	<LinkCard
+	title="🧠 Scoping"
+	description="What do you need to succeed in your Ocean AI project?"
+	/>
+	<LinkCard
+	title="📝 Grant Writing"
+	description="Write a successful grant application for Ocean AI."
+	/>
+	<LinkCard
+	title="💻 SharkTrack"
+	description="Extend SharkTrack to cover your use cases."
+	/>
+	<LinkCard
+	title="🚀 Large-Scale Ocean AI Project"
+	description="Let's positively disrupt Ocean Conservation with Machine Learning."
+	/>
 </CardGrid>

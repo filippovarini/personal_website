@@ -14,7 +14,8 @@ export default defineConfig({
 			  },
 			social: {
 				github: 'https://github.com/filippovarini',
-				linkedin: 'https://www.linkedin.com/in/filippo-varini/'
+				linkedin: 'https://www.linkedin.com/in/filippo-varini/',
+				instagram: 'https://www.instagram.com/filippo.varini/'
 			},
 			sidebar: [
 				{
