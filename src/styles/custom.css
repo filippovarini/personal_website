@@ -27,3 +27,35 @@
 	--sl-color-gray-7: #f3f7f9;
 	--sl-color-black: #ffffff;
 }
+
+.card {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+  }
+  
+.body {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.card-image {
+	width: 30%;
+	height: auto;  /* Maintain aspect ratio */
+	object-fit: contain; /* Ensures the image isn't cut */
+}
+
+.card-text {
+	width: 70%;
+	padding-left: 20px;
+}
+
+.card-text-title {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.card-text-body {
+	font-size: 16px;
+}

@@ -12,24 +12,13 @@ export default defineConfig({
 			logo: {
 				src: './src/assets/cactus.svg',
 			  },
+			favicon: './src/assets/cactus.svg',
 			social: {
 				github: 'https://github.com/filippovarini',
 				linkedin: 'https://www.linkedin.com/in/filippo-varini/',
-				instagram: 'https://www.instagram.com/filippo.varini/'
+				email: 'mailto:fppvrn@gmail.com'
 			},
-			sidebar: [
-				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', link: '/guides/example/' },
-					],
-				},
-				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
-				},
-			],
+			pagefind: false,
 		}),
 	],
 });
