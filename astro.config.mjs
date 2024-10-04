@@ -19,6 +19,7 @@ export default defineConfig({
 				email: 'mailto:fppvrn@gmail.com'
 			},
 			pagefind: false,
+			pagination: false
 		}),
 	],
 });

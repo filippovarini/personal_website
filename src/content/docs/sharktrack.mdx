@@ -19,111 +19,80 @@ hero:
 ---
 import { Aside } from '@astrojs/starlight/components';
 
+SharkTrack is a software that detects sharks and rays in underwater videos and computes MaxN in 21x faster, with machine learning.
 
-SharkTrack is an AI-enhanced software used by researchers [worldwide](#list-of-people-using-it) to analyse BRUVS videos 33 times faster.
-### SharkTrack Trailer
+Watch this trailer to learn about it:
 <div>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NeBcpscTc3M?si=vIklOFr9nRxDDm4w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
-## Contents
-
-* <a href="#overview">Overview</a>
-* <a href="#what-does-sharktrack-do">What does SharkTrack do?</a>
-* <a href="#how-is-it-useful">How is it useful?</a>
-* <a href="#how-people-run-sharktrack">How do people run SharkTrack?</a>
-* <a href="#list-of-people-using-it">List of people using it</a>
-* <a href="#contributors">Contributors</a>
-* <a href="#collaborations">Collaborations</a>
-* <a href="#next-stpes">Next Steps</a>
-
-<Aside type="tip"> Jump to the [User Guide](https://github.com/filippovarini/sharktrack/blob/master/sharktrack-user-guide.md) to get started </Aside>
-
 
 ## Overview
-Elasmobranch researchers monitor their populations using Baited Remote Underwater Video Systems (BRUVS). This is a time-consuming process, as each video needs to be manually annotated. 
+Shark and Ray (Elasmobranch) researchers monitor their populations using Baited Remote Underwater Video Systems (BRUVS). This is a time-consuming process, as each video needs to be manually annotated. 
 
-SharkTrack is a Machine Learning model that uses computer vision to detect and track Elasmobranchii in BRUVS videos. It does not classify the species. However, by simply detecting video snippets with elasmobranchs, the model drastically speeds up BRUVS annotation. Additionally, this package provides users a workflow to annotate species ID from model detectios.
+SharkTrack is a Machine Learning model that uses computer vision to detect and track Elasmobranchii in BRUVS videos and compute the MaxN metrics, used by ecologists.
 
-> Therefore SharkTrack is an AI-enhanced workflow to convert raw BRUVS videos to MaxN, which has been tested 20x faster than traditional methods.
+*Therefore SharkTrack is an AI-enhanced workflow to convert raw BRUVS videos to MaxN, which has been tested 21x faster than traditional methods.*
 
-## What does SharkTrack do?
-SharkTrack is a AI-enhanced BRUVS annotation pipeline.
-
-What this jargon means is that it does the following steps:
-1. Takes a folder with BRUVS videos, detects where sharks and rays are in the videos.
-2. Outputs an image for each individual elasmobranch found.
-3. Provides a workflow for users to quickly clean detections and assign species ID.
-
-Basically, its goal is to allow researchers to spend time *only* classifying shark species, saving the majority of time spent looking at empty frames.
-
-![](../../assets/test-output/detections/5.jpg)
-*Example image showing the video and time of the red detection*
+## How is it useful
+- 🏃‍♀️ Computes MaxN semi-automatically, 21x faster
+- 🏝 Can detect any elasmobranch species (as a single 'elasmobranch' class) in any location with 89% accuracy
+- 👨‍💻 Can run on a standard laptop - no experience or advanced tech requirement
 
 
-## How is it useful?
-The main use of SharkTrack is to compute BRUVS MaxN in hours instead of months (or years!). It can do this on a modern but simple laptop, without access to WIFI or GPU.
+## How does SharkTrack work?
+SharkTrack analyses BRUVS in two steps, as showed in Fig. 3:
+##### Step 1: Automatic Processing
+- (a) Ingests all underwater videos in a hard drive or folder
+- (b) Automatically detects elasmobranchs 
+- (c) Save sightings in a CSV
+- (d) Save a screenshot for each detected elasmobranch with video
+![](../../assets/example_detection.jpg)
+*Figure 2: Each detection image shows the video and time it was captured* 
 
-If not [fine tuned](#bespoke-deployment), it achieves ~90% MaxN accuracy. We understand that some researchers might require higher accuracy metrics, or might want to double check them. In this case, SharkTrack is very useful in providing a general overview of where sharks are in the BRUVS videos.
+##### Step 2: Manual Review
+- (e) Classify the species of detected elasmobranchs by renaming the relative screenshot filename.
+- (f) SharkTrack updates all sightings of detected elasmobranchs with the new species classification
+- (g) And outputs the species-specific MaxN
 
-Researchers also use SharkTrack during sampling, to process BRUVS overnight and share findings the next day.
+![](../../assets/figure1.png)
+*Figure 3: The SharkTrack pipeline to compute MaxN, divided into Step 1 (top) and Step 2 (bottom)*
 
+## How it can help you?
+- 👀 **Peek Mode** After a day of sampling, run it on your laptop overnight and automatically detect where and when sharks and rays appeared in the videos.
+- 🔎 **Analyst Mode** Accurately analyse the footage to derive relative abundance with the MaxN metrics.
 
-We have two main types of users:
-### BRUVS Analyst
-They analyse the BRUVS to compute accurate MaxN metrics. High accuracy is crucial to them, and they have less strict time constraints.
+Both modes can be run on a standard laptop and do not require WIFI.
 
-They use the default SharkTrack mode, called `analyst`, to detect Elasmobranch and easily annotate the species and compute MaxN.
-
-### Field Researcher
-They are currently doing BRUVS deployment. They want their daily videos to be processed overnight to share detections with the team and externally and have a precise idea of which sampling site records more sharks.
-
-They can use the `peek` mode of SharkTrack. This mode extracts interesting frames from the video, without providing annotation or MaxN support, but it is helpful to have a quick overview of their daily videos. 
-
-You can check more about the two versions of SharkTrack [here](./sharktrack-user-guide.md#how-fastaccurate-is-sharktrack)
+Overall, SharkTrack is the most helpful to process videos where elasmobranch appears rarely, as it extracts them from the mainly empty footage, removeing the need to watch it manually.
 
 
-## How people run SharkTrack?
-SharkTrack is a publicly-available model, and the [SharkTrack User Guide](./sharktrack-user-guide.md) provides instructions for running it using our Python scripts. Many of our users run SharkTrack on their own, either on the cloud or on their local computers.
+## How can I run SharkTrack?
+SharkTrack is a publicly-available model and you can install and run it by following [this guide](https://github.com/filippovarini/sharktrack/blob/master/sharktrack-user-guide.md).
 
-That said, we know that Python can be a bit daunting to setup. Additionally, SharkTrack requires significant processing power which, despite we have designed it for mobile usage, might still be a challenge. Therefore, some users - particularly high-volume users - send us BRUVS videos (online or physical hard drives), which we run through SharkTrack, then we send back a results file. 
+If you don't have experience with Python, we know it can be daunting but don't fear! By following the guide step-by-step you will have SharkTrack up and running on your videos in less than 10 minutes.
 
-If that is of interest for you, please read the [Bespoke Deployment](#bespoke-deployment) section.
+Reach out if have any quesions [here]((mailto:fppvrn@gmail.com?subject=SharkTrackHelp))
 
-Whether you're going to run SharkTrack on your own or work with us, usually the first step with a new user is just running our model on a short BRUVS video and seeing what happens, so if you're interested in trying this on your BRUVS, we can work out a way to transfer a set of example images, just [email us](mailto:fppvrn@gmail.com?subject=SharkTrack-Pilot).
 
-## List of people using it
-![](../../assets/deployment_locations.png)
-SharkTrack is currently being used by the following organisations and in the following locations:
-- Anguilla, by the [University of Exeter](https://www.linkedin.com/posts/filippo-varini_we-are-back-from-university-of-exeter-activity-7167899292593065985-dZLo?utm_source=share&utm_medium=member_desktop)
-- Revillagigedo Archipelago, Mexico, by [Pelagios Kakunja](https://pelagioskakunja.org/)
-- La Paz, Mexico, by [Pelagios Kakunja](https://pelagioskakunja.org/)
-- Gulf of California, Mexico, by [Pelagios Kakunja](https://pelagioskakunja.org/)
-- Maldives, by the [University of Leeds](http://theses.ncl.ac.uk/jspui/handle/10443/5710)
-- Boston, by the [Virginia Tech University](http://seaql.org/)
-- Hawaii, by the [Virginia Tech University](http://seaql.org/)
-- Cabo Verde, by Dr. Francesco Garzon, University of Exeter
+## Where has SharkTrack being used?
+- [Anguilla by University of Exeter and Anguilla National Trust](https://www.linkedin.com/posts/filippo-varini_we-are-back-from-university-of-exeter-activity-7167899292593065985-dZLo?utm_source=share&utm_medium=member_desktop)
+- [Revillagigedo Archipelago, Mexico by Pelagios Kakunja](https://youtu.be/NeBcpscTc3M?si=BfyYM4jQ0-NDCKZZ)
+- La Paz, Mexico by Pelagios Kakunja
+- Northern Gulf of California, Mexico by Pelagios Kakunja
+- Maldives, by the University of Leeds
+- Cabo Verde, by Dr. Francesco Garzon and Adam Whiting of the University of Exeter
 - Red Sea, by Dr. Francesco Garzon, University of Exeter
-
-Please [reach out](mailto:fppvrn@gmail.com) to be added to the list!
-
-
+- Cape Cod, by the Virginia Tech University
+- Hawaii, by the Virginia Tech University
+- Azores, by the Okeanos Institute of Marine Sciences
 
 ## Contributors
-This software was written and supported by the efforts of
-- [Filippo Varini](https://www.linkedin.com/in/filippo-varini/)
-- [Sophie Wilday](https://www.linkedin.com/in/sophie-wilday-889663b9/)
-- [Prof Ben Glocker](https://www.imperial.ac.uk/people/b.glocker)
-- [Dr Joel Gayford](https://www.sharkmeasurements.com/)
-- [Jeremy Jenrette](https://jeremyjenrette.weebly.com/)
-- [Prof Francesco Ferretti](https://ferrettigs.github.io/)
-
-We would also like to thank [Natalie Ng](https://www.linkedin.com/in/natalie-ng-951964255/), [Rui Wen Lim](https://www.linkedin.com/in/rui-wen-lim-223140235/), [Michael Sellgren](https://www.linkedin.com/in/michael-sellgren/), [Lara Tse](https://www.linkedin.com/in/lara-tse-264505209), [Steven Chen](https://www.linkedin.com/in/stevenchenwaiho), [Maria Pia Donrelas](https://www.linkedin.com/in/maria-pia-dornelas-cysneiros-6221a5230), Manfredi Minervini, [Xuen Bei (Bay) Chin](https://www.linkedin.com/in/bay-chin-36672b1a7/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app) for their invaluable contribution!
+This software and related work was supported by the efforts of Filippo Varini, Joel H. Gayford, Jeremy Jenrette, Matthew J. Witt, Francesco Garzon, Francesco Ferretti, Sophie Wilday, Mark E. Bond, Michael R. Heithaus, Danielle Robinson, Devon Carter, Najee Gumbs, Vincent Webster, Ben Glocker, Fabio De Sousa Ribeiro, Rajat Rasal, Orlando Timmerman, Natalie Ng, Rui Wen Lim, Michael Sellgren, Lara Tse, Steven Chen, Maria Pia Donrelas, Manfredi Minervini, Xuen Bei (Bay) Chin, Adam Whiting, Aurora Crocini, Gabriele Bai, Stephanie Guerinfor.
 
 ## Collaborations
-### License & Citation
-This repository is licensed with the [MIT license](https://opensource.org/license/mit). If you use MegaDetector in a publication, please cite:
+This repository is licensed with the [MIT license](https://opensource.org/license/mit). If you use SharkTrack, please cite:
 
-Varini, F. et al (2024). SharkTrack. Github. Available at
+Varini, F. et al (2024). SharkTrack. GitHub. Available at
 https://github.com/filippovarini/sharktrack
 
 
@@ -136,6 +105,8 @@ The same citation, in BibTex format:
   year={2024}
 }
 ```
+
+> We update the citation to reference the paper once it has been pubblished.
 ### Issues
 Please submit any issue on [GitHub](https://github.com/filippovarini/sharktrack/issues). We aim to respond to it within a week.
 ### Contribution
@@ -143,47 +114,7 @@ This project welcomes contributions, as pull requests, issues, or suggestions by
 
 This is the first step of a broader effort to develop generalisable marine species classifiers. We are looking for contributors for this project. If you want to get involved in AI-driven Ocean Conservation please email us.
 
-### Contacts
-- [Email](mailto:fppvrn@gmail.com?subject=SharkTrackGeneral)
-- Website
-- [Linkedin](https://www.linkedin.com/in/filippo-varini/)
-- [X](https://twitter.com/filippo_varini)
-
-### Bespoke Deployment
-Sometimes our users have high volume of BRUVS videos they want to be processed or specific requirements for SharkTrack, such for it to classify certain species or work in particularly challenging environments. 
-
-In this case, we offer a bespoke deployment service. We understand their requirements, collect their data and train a tailored model ourselves that satisfies their needs. Currently, we require funding for this service.
-
-If this is of interest for your organisation, please reach out via email by answering the following questions:
-
-1. Can you provide a short overview of your project? What ecosystem and locations are you working in? What is the water quality? What are the key species found (besides Elasmobranchii)?
-
-2. About how many hours of BRUVS do you have waiting for processing right now? Are these stereo systems?
-
-3. About how many hours do you expect to collect in the next, e.g., 1 year?
-
-4. What tools do you use to process and annotate images? For example, do you:
-
-    - Move images to folders named by species
-    - Keep an Excel spreadsheet open and fill it with filenames and species IDs
-    - Use a tool like Eventmeasure
-
-5. About what percentage of your videos is empty?
-
-6. If you are also interested in Species ID, what are the key speceis you would like to classify? 
-
-7. Do you have an NVIDIA GPU available (or access to cloud-based NVIDIA GPUs)? "I don't know what a GPU is" is a perfectly good answer.
-
-8. At the place where you plan to do most of your work, how is your bandwidth? If you're able to visit speedtest.net to measure your upload and download speeds, that's helpful.
-
-9. How did you hear about SharkTrack?
-
-10. Do you have any legal or policy constraints that prevent you from using cloud-based tools to manage or review your images?
-
-11. What is your level of fluency in Python?
-
-12. About how many images do you have that you've already annotated, from roughly the same environments? What annotations?
 
 ## Next Stpes
-[Get Started with SharkTrack](http://sharktrack.wildflow.ai/docs)
+Run the model on your BRUVS by following [this guide](https://github.com/filippovarini/sharktrack/issues)
 
