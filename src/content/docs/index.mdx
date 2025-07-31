@@ -14,97 +14,176 @@ hero:
 banner:
   content: |
     <i>Latest News:</i> SharkTrack arXiv preprint available <a href="https://www.arxiv.org/abs/2407.20623">here</a></i>
-
 ---
 
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
-import { Aside } from '@astrojs/starlight/components';
-import sharktrackPoster from '../../assets/sharktrack-poster.jpg';
-import sharktrackPaper from '../../assets/sharktrack-paper.png';
-import openDay from '../../assets/open-day.jpg';
-import obtExpedition from '../../assets/obt-expedition.JPG';
-import cecFinal from '../../assets/cec-final.jpeg';
-import inauguration from '../../assets/inauguration.jpg';
+import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+import unocDisplay from "../../assets/unoc.jpg";
+import subsPicture from "../../assets/subs.png";
+import sharktrackPoster from "../../assets/sharktrack-poster.jpg";
+import sharktrackPaper from "../../assets/sharktrack-paper.png";
+import openDay from "../../assets/open-day.jpg";
+import obtExpedition from "../../assets/obt-expedition.JPG";
+import cecFinal from "../../assets/cec-final.jpeg";
+import inauguration from "../../assets/inauguration.jpg";
 
 ## Projects
+
 <LinkCard
-title="🗺️ OceanX"
-description="Develop Machine Learning for Deep Sea Ocean Exploration and Conservation"
-href="https://oceanx.org/"
-target="_blank"
+  title="🗺️ OceanX"
+  description="Develop Machine Learning for Deep Sea Ocean Exploration and Conservation"
+  href="https://oceanx.org/"
+  target="_blank"
 ></LinkCard>
 <LinkCard
-title="🦈 SharkTrack"
-description="A Machine Learning software that researchers use worldwide to analyse underwater videos (BRUVS) in near-instant time."
-href="/sharktrack/"
-target="_blank"
+  title="🦈 SharkTrack"
+  description="A Machine Learning software that researchers use worldwide to analyse underwater videos (BRUVS) in near-instant time."
+  href="/sharktrack/"
+  target="_blank"
 ></LinkCard>
 <LinkCard
-title="📡 Palantir Technologies"
-description="I deployed advanced technology to real world use cases at this world leading data company, delivering and creating multi-milion dollar contracts in the aviation and climate change sector."
-href="https://www.palantir.com/"
-target="_blank"
+  title="📡 Palantir Technologies"
+  description="I deployed advanced technology to real world use cases at this world leading data company, delivering and creating multi-milion dollar contracts in the aviation and climate change sector."
+  href="https://www.palantir.com/"
+  target="_blank"
 />
 <LinkCard
-title="🌎 Climate Pre Accelerator"
-description="I founded a university accelerator that launched 30 climate tech startups. It was featured in Forbes and nominated Climate Innovator by UNICEF."
-href="https://www.forbes.com/sites/mariannelehnis/2023/03/02/why-imperial-college-launched-a-climatetech-pre-accelerator/"
-target="_blank"
+  title="🌎 Climate Pre Accelerator"
+  description="I founded a university accelerator that launched 30 climate tech startups. It was featured in Forbes and nominated Climate Innovator by UNICEF."
+  href="https://www.forbes.com/sites/mariannelehnis/2023/03/02/why-imperial-college-launched-a-climatetech-pre-accelerator/"
+  target="_blank"
 />
 <LinkCard
-title="📈 CDR.FYI"
-description="A data dashboard bringing transparency to the Carbon Dioxide Removal (CDR) market. It now has more than 10k monthly users and was featured in the Wall Street Journaly and Yahoo Finance."
-href="https://www.cdr.fyi/"
-target="_blank"
-back
+  title="📈 CDR.FYI"
+  description="A data dashboard bringing transparency to the Carbon Dioxide Removal (CDR) market. It now has more than 10k monthly users and was featured in the Wall Street Journaly and Yahoo Finance."
+  href="https://www.cdr.fyi/"
+  target="_blank"
+  back
 />
-
-
-## Ocean AI Consultancy
-
-I offer consultancy services for developing Machine Learning systems for Ocean Conservation. If you are interested, please email me [here](mailto:fppvrn@gmail.com)
-
 
 ## News
+
 <Card>
-	<img src={sharktrackPoster.src} class="card-image" />
-	<div class="card-text">
-		<p class="card-text-title"><a href="https://fishaiconsortium.org/meetings_seminars.html#sharktrack-a-ai-enhanced-software-for-20x-faster-shark-and-ray-underwater-video-analysis">Seminar Presentation: SharkTrack: AI-enhanced video analysis of sharks and rays</a></p>
-		<p class="card-text-body">04/10/2024: Hosted by the FishAI Consortium, describe how to deploy the open-source SharkTrack software, as well as future development perspectives in the Ocean Vision AI domain.</p>
-	</div>
+  <img src={subsPicture.src} class="card-image" />
+  <div class="card-text">
+    <p class="card-text-title">
+      <a href="https://www.linkedin.com/posts/filippo-varini_i-just-came-back-from-an-incredible-expedition-activity-7356718256436445184-9G3T?utm_source=share&utm_medium=member_desktop&rcm=ACoAADJk4VQB__eLIZkcUTux2NOEDolxu6gdf_E">
+        Deployed Real Time AI on OceanX Mission in Cabo Verde
+      </a>
+    </p>
+    <p class="card-text-body">
+      07/07/2025: Deployed SeaSwipe, an AI Platform which ingests videos
+      collected thousands of meters deep in real time and in real time it
+      detects vulnerable organisms. The AI Model is included in a mobile
+      application that expedition members can use to provide feedback to the
+      model, which retrains in real time and improves its accuracy throughout
+      the expedition.
+    </p>
+  </div>
 </Card>
 <Card>
-	<img src={sharktrackPaper.src} class="card-image" />
-	<div class="card-text">
-		<p class="card-text-title"><a href="https://arxiv.org/abs/2407.20623">PrePrint Available: SharkTrack: an accurate, generalisable software for streamlining shark and ray underwater video analysis</a></p>
-		<p class="card-text-body">25/09/2024: Filippo Varini, Joel H. Gayford, Jeremy Jenrette, Matthew J. Witt, Francesco Garzon, Francesco Ferretti, Sophie Wilday, Mark E. Bond, Michael R. Heithaus, Danielle Robinson, Devon Carter, Najee Gumbs, Vincent Webster, Ben Glocker</p>
-	</div>
+  <img src={unocDisplay.src} class="card-image" />
+  <div class="card-text">
+    <p class="card-text-title">
+      <a href="https://oceanx.org/press-room/oceanx-at-unoc-2025-driving-action-through-science-and-education-for-a-sustainabl/">
+        Presented AI Work at OceanX at the United Nations Ocean Conference ,
+        viewed by 100,000 total visitors
+      </a>
+    </p>
+    <p class="card-text-body">
+      16/10/2025: OceanX, in collaboration with other partners hosted the Deep
+      Blue Pavillion at the United Nations Ocean Confernece. There, we showcased
+      the AI Project we have been carrying out, to analyze deep sea video in
+      real time, and detect organisms requiring protection.
+    </p>
+  </div>
 </Card>
 <Card>
-	<img src={openDay.src} class="card-image"/>
-	<div class="card-text">
-		<p class="card-text-title">SharkTrack nominated Outstanding Project by Imperial College</p>
-		<p class="card-text-body">25/06/2024: The project was awarded the Imperial Solidatus Project Prize and was presented at the Imperial College Open Day</p>
-	</div>
+  <img src={sharktrackPoster.src} class="card-image" />
+  <div class="card-text">
+    <p class="card-text-title">
+      <a href="https://fishaiconsortium.org/meetings_seminars.html#sharktrack-a-ai-enhanced-software-for-20x-faster-shark-and-ray-underwater-video-analysis">
+        Seminar Presentation: SharkTrack: AI-enhanced video analysis of sharks
+        and rays
+      </a>
+    </p>
+    <p class="card-text-body">
+      04/10/2024: Hosted by the FishAI Consortium, describe how to deploy the
+      open-source SharkTrack software, as well as future development
+      perspectives in the Ocean Vision AI domain.
+    </p>
+  </div>
 </Card>
 <Card>
-	<img src={obtExpedition.src} class="card-image" />
-	<div class="card-text">
-		<p class="card-text-title"><a href="https://youtu.be/NeBcpscTc3M?si=xmmZ0TNKogB5f1mT">SharkTrack deployed in the Revillagigedo Archipelago</a></p>
-		<p class="card-text-body">01/06/2024: In collaboration with Pelagios Kakunja and Ocean Blue Tree, we deployed SharkTrack in the biggest MPA of North America, in a 3-week boat expedition to the archipelago</p>
-	</div>
+  <img src={sharktrackPaper.src} class="card-image" />
+  <div class="card-text">
+    <p class="card-text-title">
+      <a href="https://arxiv.org/abs/2407.20623">
+        PrePrint Available: SharkTrack: an accurate, generalisable software for
+        streamlining shark and ray underwater video analysis
+      </a>
+    </p>
+    <p class="card-text-body">
+      25/09/2024: Filippo Varini, Joel H. Gayford, Jeremy Jenrette, Matthew J.
+      Witt, Francesco Garzon, Francesco Ferretti, Sophie Wilday, Mark E. Bond,
+      Michael R. Heithaus, Danielle Robinson, Devon Carter, Najee Gumbs, Vincent
+      Webster, Ben Glocker
+    </p>
+  </div>
 </Card>
 <Card>
-	<img src={cecFinal.src} class="card-image" />
-	<div class="card-text">
-		<p class="card-text-title"><a href="https://www.linkedin.com/posts/filippo-varini_and-thats-a-wrap-for-climate-pre-accelerator-activity-7069947805267570688-Ty5h?utm_source=share&utm_medium=member_desktop">Imperial Climate Pre Accelerator Cohort 1 completed!</a></p>
-		<p class="card-text-body">30/05/2023: The Cohort 1 supported 103 climate entrepreneurs to launch 13 Climate Tech startups. The pitch day awarded £4,000 in prizes and was attended by 100 partners and investors.</p>
-	</div>
+  <img src={openDay.src} class="card-image" />
+  <div class="card-text">
+    <p class="card-text-title">
+      SharkTrack nominated Outstanding Project by Imperial College
+    </p>
+    <p class="card-text-body">
+      25/06/2024: The project was awarded the Imperial Solidatus Project Prize
+      and was presented at the Imperial College Open Day
+    </p>
+  </div>
 </Card>
 <Card>
-	<img src={inauguration.src} class="card-image" />
-	<div class="card-text">
-		<p class="card-text-title"><a href="https://www.forbes.com/sites/mariannelehnis/2023/03/02/why-imperial-college-launched-a-climatetech-pre-accelerator/">Imperial Climate Pre Accelerator was featured in Forbes</a></p>
-		<p class="card-text-body">03/03/2023: The startup accelerator inaugurated the Cohort 1 with 103 climate entrepreneurs from 7 universities worldwide.</p>
-	</div>
+  <img src={obtExpedition.src} class="card-image" />
+  <div class="card-text">
+    <p class="card-text-title">
+      <a href="https://youtu.be/NeBcpscTc3M?si=xmmZ0TNKogB5f1mT">
+        SharkTrack deployed in the Revillagigedo Archipelago
+      </a>
+    </p>
+    <p class="card-text-body">
+      01/06/2024: In collaboration with Pelagios Kakunja and Ocean Blue Tree, we
+      deployed SharkTrack in the biggest MPA of North America, in a 3-week boat
+      expedition to the archipelago
+    </p>
+  </div>
+</Card>
+<Card>
+  <img src={cecFinal.src} class="card-image" />
+  <div class="card-text">
+    <p class="card-text-title">
+      <a href="https://www.linkedin.com/posts/filippo-varini_and-thats-a-wrap-for-climate-pre-accelerator-activity-7069947805267570688-Ty5h?utm_source=share&utm_medium=member_desktop">
+        Imperial Climate Pre Accelerator Cohort 1 completed!
+      </a>
+    </p>
+    <p class="card-text-body">
+      30/05/2023: The Cohort 1 supported 103 climate entrepreneurs to launch 13
+      Climate Tech startups. The pitch day awarded £4,000 in prizes and was
+      attended by 100 partners and investors.
+    </p>
+  </div>
+</Card>
+<Card>
+  <img src={inauguration.src} class="card-image" />
+  <div class="card-text">
+    <p class="card-text-title">
+      <a href="https://www.forbes.com/sites/mariannelehnis/2023/03/02/why-imperial-college-launched-a-climatetech-pre-accelerator/">
+        Imperial Climate Pre Accelerator was featured in Forbes
+      </a>
+    </p>
+    <p class="card-text-body">
+      03/03/2023: The startup accelerator inaugurated the Cohort 1 with 103
+      climate entrepreneurs from 7 universities worldwide.
+    </p>
+  </div>
 </Card>
