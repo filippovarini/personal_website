@@ -161,6 +161,7 @@ const { locations = defaultLocations } = Astro.props;
     let isFocused = false;
     let width = 0;
     let focusTimeout: ReturnType<typeof setTimeout> | null = null;
+    let activeMarkerIndex = -1;
 
     const chips = document.querySelectorAll(".location-chip");
     const infoPanel = document.getElementById("globe-info-panel");
@@ -173,12 +174,19 @@ const { locations = defaultLocations } = Astro.props;
       ];
     }
 
-    // Build marker array from location chip data attributes
-    const markers = Array.from(chips).map((btn) => {
-      const lat = parseFloat(btn.getAttribute("data-lat") || "0");
-      const lng = parseFloat(btn.getAttribute("data-lng") || "0");
-      return { location: [lat, lng] as [number, number], size: 0.07 };
-    });
+    // Pre-compute location data from chip attributes
+    const locationData = Array.from(chips).map((btn) => ({
+      lat: parseFloat(btn.getAttribute("data-lat") || "0"),
+      lng: parseFloat(btn.getAttribute("data-lng") || "0"),
+    }));
+
+    // Build marker array; the active marker gets a larger size
+    function buildMarkers() {
+      return locationData.map((loc, i) => ({
+        location: [loc.lat, loc.lng] as [number, number],
+        size: i === activeMarkerIndex ? 0.15 : 0.07,
+      }));
+    }
 
     // Handle responsive sizing
     const onResize = () => {
@@ -198,46 +206,53 @@ const { locations = defaultLocations } = Astro.props;
     // Ensure we have a usable width even if the parent hasn't been laid out yet
     if (width === 0) width = 400;
 
-    // Initialize cobe globe
-    const globe = createGlobe(canvas, {
-      devicePixelRatio: 2,
-      width: width * 2,
-      height: width * 2,
-      phi: 0,
-      theta: 0.25,
-      dark: 1,
-      diffuse: 3,
-      mapSamples: 20000,
-      mapBrightness: 6,
-      baseColor: [0.05, 0.2, 0.4],
-      markerColor: [0.1, 0.8, 1.0],
-      glowColor: [0.05, 0.15, 0.3],
-      markers,
-      onRender: (state: Record<string, number>) => {
-        if (!isFocused) {
-          currentPhi += 0.005;
-        } else {
-          // Shortest-path interpolation: wrap the difference to [-π, π]
-          // so the globe always takes the shortest rotation to the target
-          const diff =
-            ((focusPhi - currentPhi) % TWO_PI + 3 * Math.PI) % TWO_PI -
-            Math.PI;
-          currentPhi += diff * 0.08;
-          currentTheta += (focusTheta - currentTheta) * 0.08;
-        }
+    // Shared onRender callback used across globe instances
+    function onRender(state: Record<string, number>) {
+      if (!isFocused) {
+        currentPhi += 0.005;
+      } else {
+        // Shortest-path interpolation: wrap the difference to [-π, π]
+        // so the globe always takes the shortest rotation to the target
+        const diff =
+          ((focusPhi - currentPhi) % TWO_PI + 3 * Math.PI) % TWO_PI -
+          Math.PI;
+        currentPhi += diff * 0.08;
+        currentTheta += (focusTheta - currentTheta) * 0.08;
+      }
 
-        state.phi = currentPhi;
-        state.theta = currentTheta;
-        state.width = width * 2;
-        state.height = width * 2;
-      },
-    });
+      state.phi = currentPhi;
+      state.theta = currentTheta;
+      state.width = width * 2;
+      state.height = width * 2;
+    }
+
+    // Create (or recreate) the globe, preserving the current rotation
+    function createGlobeInstance() {
+      return createGlobe(canvas, {
+        devicePixelRatio: 2,
+        width: width * 2,
+        height: width * 2,
+        phi: currentPhi,
+        theta: currentTheta,
+        dark: 1,
+        diffuse: 3,
+        mapSamples: 20000,
+        mapBrightness: 6,
+        baseColor: [0.05, 0.2, 0.4],
+        markerColor: [0.1, 0.8, 1.0],
+        glowColor: [0.05, 0.15, 0.3],
+        markers: buildMarkers(),
+        onRender,
+      });
+    }
+
+    // Initialize cobe globe
+    let globe = createGlobeInstance();
 
     // Handle location chip clicks
-    chips.forEach((btn) => {
+    chips.forEach((btn, index) => {
       btn.addEventListener("click", () => {
-        const lat = parseFloat(btn.getAttribute("data-lat") || "0");
-        const lng = parseFloat(btn.getAttribute("data-lng") || "0");
+        const { lat, lng } = locationData[index];
         const name = btn.getAttribute("data-name") || "";
         const description = btn.getAttribute("data-description") || "";
         const link = btn.getAttribute("data-link") || "";
@@ -248,6 +263,12 @@ const { locations = defaultLocations } = Astro.props;
         focusPhi = p;
         focusTheta = t;
         isFocused = true;
+
+        // Highlight the active marker by recreating the globe with
+        // an enlarged pin at this location (cobe bakes markers at init)
+        activeMarkerIndex = index;
+        globe.destroy();
+        globe = createGlobeInstance();
 
         // Update active chip
         chips.forEach((b) => b.classList.remove("active"));
