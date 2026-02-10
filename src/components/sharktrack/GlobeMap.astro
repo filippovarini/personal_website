@@ -12,6 +12,8 @@
  * To add a new location, add an entry to the `defaultLocations` array below,
  * or pass a `locations` prop from the MDX page.
  */
+import defaultLocations from "../../assets/sharktrack/example_usages/usages.json";
+
 interface Location {
   name: string;
   lat: number;
@@ -25,92 +27,9 @@ interface Props {
   locations?: Location[];
 }
 
-const defaultLocations: Location[] = [
-  {
-    name: "Anguilla",
-    lat: 18.22,
-    lng: -63.07,
-    description: "University of Exeter and Anguilla National Trust",
-    link: "https://www.linkedin.com/posts/filippo-varini_we-are-back-from-university-of-exeter-activity-7167899292593065985-dZLo",
-  },
-  {
-    name: "Revillagigedo, Mexico",
-    lat: 18.83,
-    lng: -110.98,
-    description: "Pelagios Kakunja",
-    link: "https://youtu.be/NeBcpscTc3M",
-  },
-  {
-    name: "La Paz, Mexico",
-    lat: 24.14,
-    lng: -110.31,
-    description: "Pelagios Kakunja",
-  },
-  {
-    name: "N. Gulf of California",
-    lat: 31.0,
-    lng: -114.5,
-    description: "Pelagios Kakunja",
-  },
-  {
-    name: "Maldives",
-    lat: 3.2,
-    lng: 73.22,
-    description: "University of Leeds",
-  },
-  {
-    name: "Cabo Verde",
-    lat: 16.0,
-    lng: -24.0,
-    description: "Dr. Francesco Garzon and Adam Whiting, University of Exeter",
-  },
-  {
-    name: "Red Sea",
-    lat: 22.0,
-    lng: 38.0,
-    description: "Dr. Francesco Garzon, University of Exeter",
-  },
-  {
-    name: "Cape Cod, USA",
-    lat: 41.67,
-    lng: -70.3,
-    description: "Virginia Tech University",
-  },
-  {
-    name: "Hawaii, USA",
-    lat: 19.9,
-    lng: -155.58,
-    description: "Virginia Tech University",
-  },
-  {
-    name: "Azores",
-    lat: 38.72,
-    lng: -27.22,
-    description: "Okeanos Institute of Marine Sciences",
-  },
-  {
-    name: "Thailand",
-    lat: 13.76,
-    lng: 100.5,
-    description: "Thai Sharks and Rays & Thai DMCR",
-    link: "https://www.reshark.org/star-project",
-  },
-  {
-    name: "Scotland, UK",
-    lat: 56.49,
-    lng: -4.2,
-    description: "Tash Yates, Edinburgh Napier University",
-  },
-  {
-    name: "Las Perlas, Panama",
-    lat: 8.35,
-    lng: -79.05,
-    description: "Maralliance",
-    link: "https://maralliance.org/",
-  },
-];
+const typedDefaultLocations = defaultLocations as Location[];
 
-const { locations = defaultLocations } = Astro.props;
+const { locations = typedDefaultLocations } = Astro.props;
 ---
 
 <section class="globe-section" id="users-worldwide">
@@ -282,7 +201,7 @@ const { locations = defaultLocations } = Astro.props;
           if (image) {
             html += `<img src="${image}" alt="${name}" class="globe-info-card__image" />`;
           } else {
-            html += `<div class="globe-info-card__image-placeholder">📷 Add project image</div>`;
+            html += `<div class="globe-info-card__image-placeholder">📷 Images coming soon...</div>`;
           }
           if (link) {
             html += `<a href="${link}" target="_blank" rel="noopener noreferrer" class="globe-info-card__link">Learn more →</a>`;

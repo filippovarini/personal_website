@@ -1,0 +1,89 @@
+[
+  {
+    "name": "Anguilla",
+    "lat": 18.22,
+    "lng": -63.07,
+    "description": "In collaboration with the University of Exeter and the Anguilla National Trust.",
+    "link": "https://www.linkedin.com/posts/filippo-varini_we-are-back-from-university-of-exeter-activity-7167899292593065985-dZLo",
+    "image": "/src/assets/sharktrack/example_usages/anguilla.jpg"
+  },
+  {
+    "name": "Revillagigedo, Mexico",
+    "lat": 18.83,
+    "lng": -110.98,
+    "description": "In collaboration with Pelagios Kakunja and Ocean Blue Tree (OBT), during the 2024 OBT Summit Expedition.",
+    "link": "https://youtu.be/2qQga-CP81o?si=RntAoQa2GtDIKKEv",
+    "image": "/src/assets/sharktrack/example_usages/revillagigedo.jpg"
+  },
+  {
+    "name": "La Paz, Mexico",
+    "lat": 24.14,
+    "lng": -110.31,
+    "description": "In collaboration with Pelagios Kakunja, to monitor shark populations in the Gulf of Mexico",
+    "image": "/src/assets/sharktrack/example_usages/malecon.jpg"
+  },
+  {
+    "name": "N. Gulf of California",
+    "lat": 31,
+    "lng": -114.5,
+    "description": "In collaboration with Pelagios Kakunja"
+  },
+  {
+    "name": "Maldives",
+    "lat": 3.2,
+    "lng": 73.22,
+    "description": "In collaboration with Danielle Robinson, University of Leeds",
+    "image": "/src/assets/sharktrack/example_usages/maldives.jpg"
+  },
+  {
+    "name": "Cabo Verde",
+    "lat": 16,
+    "lng": -24,
+    "description": "Dr. Francesco Garzon and Adam Whiting, University of Exeter"
+  },
+  {
+    "name": "Red Sea",
+    "lat": 22,
+    "lng": 38,
+    "description": "Dr. Francesco Garzon, University of Exeter",
+    "image": "/src/assets/sharktrack/example_usages/redsea.jpg"
+  },
+  {
+    "name": "Cape Cod, USA",
+    "lat": 41.67,
+    "lng": -70.3,
+    "description": "Prof Francesco Ferretti and Dr Jeremy Jenrette, Virginia Tech University"
+  },
+  {
+    "name": "Hawaii, USA",
+    "lat": 19.9,
+    "lng": -155.58,
+    "description": "Prof Francesco Ferretti and Dr Jeremy Jenrette, Virginia Tech University"
+  },
+  {
+    "name": "Azores",
+    "lat": 38.72,
+    "lng": -27.22,
+    "description": "Okeanos Institute of Marine Sciences"
+  },
+  {
+    "name": "Thailand",
+    "lat": 13.76,
+    "lng": 100.5,
+    "description": "Thai Sharks and Rays & Thai DMCR",
+    "link": "https://www.reshark.org/star-project"
+  },
+  {
+    "name": "Scotland, UK",
+    "lat": 56.49,
+    "lng": -4.2,
+    "description": "Tash Yates, Edinburgh Napier University"
+  },
+  {
+    "name": "Las Perlas, Panama",
+    "lat": 8.35,
+    "lng": -79.05,
+    "description": "Maralliance",
+    "link": "https://maralliance.org/"
+  }
+]
