@@ -200,9 +200,13 @@ main:has(.video-hero) .sl-container > * + * {
 }
 
 .globe-section__title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: 1.2rem;
   color: #ffffff !important;
-  margin: 0 0 0.5rem;
+  font-weight: 400;
+}
+
+.globe-section__title strong {
+  color: #00a8ff !important;
 }
 
 .globe-section__subtitle {
@@ -359,7 +363,7 @@ main:has(.video-hero) .sl-container > * + * {
    -------------------------------------------------------------------------- */
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1.5rem;
   margin: 1.5rem 0 2rem;
 }
@@ -492,27 +496,28 @@ main:has(.video-hero) .sl-container > * + * {
   flex-direction: column;
   gap: 0.5rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0a3d5c;
+  border: 1px solid rgba(0, 168, 255, 0.35);
   border-radius: 12px;
   text-decoration: none;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .guide-card:hover {
-  background: rgba(0, 113, 167, 0.1);
+  background: #0d4a6f;
   border-color: var(--sl-color-accent);
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 113, 167, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 113, 167, 0.25);
 }
 
 :root[data-theme="light"] .guide-card {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: rgba(0, 0, 0, 0.1);
+  background: #0a3d5c;
+  border-color: rgba(0, 113, 167, 0.4);
 }
 
 :root[data-theme="light"] .guide-card:hover {
-  background: rgba(0, 113, 167, 0.05);
+  background: #0d4a6f;
 }
 
 .guide-card__icon {
@@ -522,7 +527,7 @@ main:has(.video-hero) .sl-container > * + * {
 .guide-card__title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--sl-color-white);
+  color: #ffffff !important;
 }
 
 .guide-card__desc {

@@ -11,9 +11,8 @@ import SectionNav from "../../../components/sharktrack/SectionNav.astro";
 
 {/* ── Floating section navigation (appears on scroll) ── */}
 <SectionNav sections={[
-  { id: "users-worldwide", label: "Users Worldwide" },
   { id: "overview", label: "Overview" },
-  { id: "features", label: "Features" },
+  { id: "users-worldwide", label: "Users Worldwide" },
   { id: "how-does-it-work", label: "How It Works" },
   { id: "get-started", label: "Get Started" },
   { id: "publication", label: "Publication" },
@@ -25,31 +24,22 @@ import SectionNav from "../../../components/sharktrack/SectionNav.astro";
   title="SharkTrack"
   tagline="A software that detects sharks and rays in underwater videos and computes MaxN 21x faster, with machine learning."
 >
-  <a href="#overview" class="st-btn st-btn--primary">Learn</a>
-  <a href="/sharktrack/user-guide/" class="st-btn st-btn--secondary">Get Started</a>
+  <a href="/sharktrack/user-guide/" class="st-btn st-btn--primary">Get Started</a>
+  <a href="https://github.com/filippovarini/sharktrack" class="st-btn st-btn--secondary" target="_blank">GitHub</a>
 </VideoHero>
-
-{/* ── Interactive Globe Map ── */}
-<GlobeMap />
 
 {/* ── Main content sections ── */}
 <div class="st-content">
 
 <section id="overview">
 
-## Overview
+## What is SharkTrack?
 
-Shark and Ray (Elasmobranch) researchers monitor their populations using Baited Remote Underwater Video Systems (BRUVS). This is a time-consuming process, as each video needs to be manually annotated.
+To protect sharks and rays, scientists and conservationists monitor their populations with underwater videos (i.e. BRUVS, RUVS, ROVs).  This process requires them to manually analyse 1000s of hours of videos, which is extremely time-consuming.
 
-SharkTrack is a Machine Learning model that uses computer vision to detect and track Elasmobranchii in BRUVS videos and compute the MaxN metrics, used by ecologists.
+SharkTrack is an AI-enhanced video annotation pipeline that uses computer vision to detect and track sharks/rays in BRUVS videos and computes ecology metrics (MaxN), used by ecologists.
 
-> SharkTrack is an AI-enhanced workflow to convert raw BRUVS videos to MaxN, which has been tested **21x faster** than traditional methods.
-
-</section>
-
-<section id="features">
-
-## Features
+We tested the performance of SharkTrack in [Varini et al 2024](https://www.arxiv.org/abs/2407.20623) and found out that:
 
 <div class="feature-grid">
   <FeatureCard
@@ -60,7 +50,7 @@ SharkTrack is a Machine Learning model that uses computer vision to detect and t
   <FeatureCard
     icon="🌍"
     title="89% Accuracy"
-    description="Detects any elasmobranch species in any location as a single 'elasmobranch' class."
+    description="At detecting shark/ray in unseen locations as a single 'elasmobranch' class."
   />
   <FeatureCard
     icon="💻"
@@ -71,35 +61,37 @@ SharkTrack is a Machine Learning model that uses computer vision to detect and t
 
 </section>
 
+{/* ── Interactive Globe Map ── */}
+<section id="users-worldwide">
+  <GlobeMap />
+</section>
+
 <section id="how-does-it-work">
 
 ## How Does It Work?
 
 SharkTrack analyses BRUVS in two steps:
 
-{/* TODO: Uncomment and adjust path once you have the pipeline figure image */}
-{/* ![The SharkTrack pipeline](../../../assets/figure1.png) */}
+![The SharkTrack pipeline](/src/assets/sharktrack/sharktrack-pipeline-figure.png)
 
 ### Step 1: Automatic Processing
 
 - **(a)** Ingests all underwater videos in a hard drive or folder
-- **(b)** Automatically detects elasmobranchs
+- **(b)** Automatically detects and tracks elasmobranchs
 - **(c)** Saves sightings in a CSV
 - **(d)** Saves a screenshot for each detected elasmobranch
 
-{/* TODO: Uncomment and adjust path once you have the detection example image */}
-{/* ![Detection example](../../../assets/example_detection.jpg) */}
 
 ### Step 2: Manual Review
-
-- **(e)** Classify the species of detected elasmobranchs by renaming the screenshot filename
-- **(f)** SharkTrack updates all sightings with the new species classification
-- **(g)** Outputs the species-specific MaxN
+Scroll through the screenshot (detected individuals) and:
+- **(e)** Delete false detections (i.e. algae, trash)
+- **(f)** Classify the species of detected elasmobranchs by renaming the screenshot filename
+- **(g)** With a script, SharkTrack updates all sightings with the new species classifications and outputs the species-specific MaxN
 
 ### Two Modes
 
-- **👀 Peek Mode** — Run it overnight after a day of sampling. Automatically detect where and when sharks and rays appeared.
-- **🔎 Analyst Mode** — Accurately analyse footage to derive relative abundance with MaxN metrics.
+- **🔎 Analyst Mode** — Detect and track sharks in the videos. Use it to derive relative abundance with MaxN metrics.
+- **👀 Peek Mode** — Just detect sharks in videos. Use it for faster analysis but without tracking or MaxN computations downstream.
 
 Both modes run on a standard laptop and do not require WiFi.
 
@@ -113,14 +105,9 @@ SharkTrack is publicly available and free to use. Follow our step-by-step guides
 
 <div class="guide-links">
   <a href="/sharktrack/user-guide/" class="guide-card">
-    <span class="guide-card__icon">📥</span>
-    <span class="guide-card__title">User Guide</span>
-    <span class="guide-card__desc">Install and run SharkTrack on your BRUVS videos</span>
-  </a>
-  <a href="/sharktrack/annotation-pipeline/" class="guide-card">
-    <span class="guide-card__icon">📊</span>
-    <span class="guide-card__title">Annotation Pipeline</span>
-    <span class="guide-card__desc">Review output and compute species-specific MaxN metrics</span>
+    <span class="guide-card__icon">📙</span>
+    <span class="guide-card__title">Documentation</span>
+    <span class="guide-card__desc">Follow the guide to run SharkTrack and analyze the videos (10m)</span>
   </a>
 </div>
 
