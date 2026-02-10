@@ -1,0 +1,87 @@
+---
+/**
+ * SectionNav - Floating side navigation for the SharkTrack landing page.
+ *
+ * Appears when the user scrolls past the video hero section.
+ * Highlights the currently visible section using IntersectionObserver.
+ *
+ * Usage in MDX:
+ *   <SectionNav sections={[
+ *     { id: "users-worldwide", label: "Users Worldwide" },
+ *     { id: "overview", label: "Overview" },
+ *   ]} />
+ */
+interface Section {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  sections: Section[];
+}
+
+const { sections } = Astro.props;
+---
+
+<nav class="section-nav" id="section-nav" aria-label="On this page">
+  <span class="section-nav__heading">On this page</span>
+  <ul class="section-nav__list">
+    {sections.map((section) => (
+      <li>
+        <a
+          href={`#${section.id}`}
+          class="section-nav__link"
+          data-section={section.id}
+        >
+          {section.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  const nav = document.getElementById("section-nav");
+  const links = nav?.querySelectorAll<HTMLAnchorElement>(".section-nav__link");
+
+  if (nav && links && links.length > 0) {
+    // Show/hide nav based on hero visibility
+    const heroEl = document.querySelector(".video-hero");
+    if (heroEl) {
+      const heroObserver = new IntersectionObserver(
+        ([entry]) => {
+          nav.classList.toggle("visible", !entry.isIntersecting);
+        },
+        { threshold: 0 }
+      );
+      heroObserver.observe(heroEl);
+    }
+
+    // Track which section is currently in view
+    const sectionIds = Array.from(links).map(
+      (link) => link.getAttribute("data-section")!
+    );
+
+    const sectionEls = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            links.forEach((link) => {
+              link.classList.toggle(
+                "active",
+                link.getAttribute("data-section") === entry.target.id
+              );
+            });
+          }
+        }
+      },
+      { rootMargin: "-10% 0px -70% 0px" }
+    );
+
+    sectionEls.forEach((el) => sectionObserver.observe(el));
+  }
+</script>

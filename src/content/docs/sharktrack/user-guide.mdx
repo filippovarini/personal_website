@@ -1,0 +1,224 @@
+---
+title: SharkTrack User Guide
+description: How to download, install, and run SharkTrack on your BRUVS videos.
+---
+
+import { Aside, LinkCard } from "@astrojs/starlight/components";
+
+<Aside type="tip">
+  SharkTrack is free and it makes us super-happy when people use it! Please fill in this [**30 seconds form**](https://forms.gle/sUeTarNqcTgxdyjU8) to tell us you are using SharkTrack.
+</Aside>
+
+## Overview
+
+This page guides you to download SharkTrack and run it on your videos. This completes **Step 1** of the BRUVS analysis process.
+
+{/* TODO: Uncomment when you have the step 1 image */}
+{/* ![Step 1 diagram](../../../assets/figure1.png) */}
+
+> Given a folder or hard drive with BRUVS, SharkTrack automatically processes the videos, detects elasmobranchs, saves detection information in a CSV file, and stores a detection image for each individual elasmobranch found.
+
+Once you have the output, move to the [Annotation Pipeline](/sharktrack/annotation-pipeline/) to compute MaxN.
+
+---
+
+## Installing SharkTrack
+
+If you don't have experience with Python, don't fear! Follow this guide step by step and you will have it running shortly.
+
+### Pre-Requirements
+
+You must have **Python 3.9** or above.
+
+**On Windows:**
+- Open Command Prompt (type `cmd` in the search bar)
+- Run: `python --version`
+
+**On macOS:**
+- Open Terminal (Spotlight or Applications > Utilities)
+- Run: `python3 --version`
+
+<Aside type="caution">
+  If you don't have Python 3.9 or above, install it from [python.org/downloads](https://www.python.org/downloads/).
+</Aside>
+
+### Downloading the Model
+
+1. Download the latest release from [GitHub Releases](https://github.com/filippovarini/sharktrack/releases) (download the **zip file** only)
+2. Unzip the folder to extract `sharktrack`
+3. Move `sharktrack` to the Desktop
+
+**On Windows:**
+- Open the extracted `sharktrack` folder
+- If using Command Prompt: replace the text in the address bar with `cmd` and hit Enter
+- If using Anaconda: copy the address, open Anaconda Prompt, and run `cd {the address}`
+
+**On macOS / Linux:**
+- Right-click on the `sharktrack` folder
+- Click "New Terminal at Folder" (sometimes under Services)
+
+### Setup Environment
+
+Now that you have the Terminal open at the `sharktrack` folder, set up the environment:
+
+**If you use Anaconda:**
+```bash
+conda create -n sharktrack anaconda
+conda activate sharktrack
+pip install -r requirements.txt
+```
+
+**On Windows (no Anaconda):**
+```bash
+python -m venv venv
+venv\Scripts\activate.bat
+pip install -r requirements.txt
+```
+
+**On macOS / Linux:**
+```bash
+python -m venv venv
+```
+
+If that fails, try: `python3 -m venv venv`
+
+Then:
+```bash
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+---
+
+## Running SharkTrack
+
+Congratulations on setting up SharkTrack! From now on, whenever you want to run it, follow these steps.
+
+You can move your videos into the `./input_videos` folder inside SharkTrack, or specify a custom path.
+
+**If you use Anaconda:**
+```bash
+conda activate sharktrack
+python app.py
+```
+
+**On Windows:**
+```bash
+venv\Scripts\activate.bat
+python app.py
+```
+
+**On macOS / Linux:**
+```bash
+source venv/bin/activate
+python app.py
+```
+
+<Aside type="tip">
+  After the model finishes running, check the results in the output folder. Now it's time to **generate MaxN** — move to the [Annotation Pipeline](/sharktrack/annotation-pipeline/).
+</Aside>
+
+<Aside>
+  The model takes approximately **0.75% of video time** to run on CPU. For faster processing, check [Peek Mode](#sharktrack-peek-mode).
+</Aside>
+
+### Configuration
+
+You can configure SharkTrack by adding arguments to the command:
+
+```bash
+python app.py --arg1 {val1} --arg2 {val2} --arg3
+```
+
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `--input {path}` | Path to the video folder. Processes all `.mp4` videos recursively. | `./input_videos` |
+| `--stereo_prefix {prefix}` | Only process videos whose filename starts with this prefix (for Stereo-BRUVS). | — |
+| `--limit {n}` | Maximum number of videos to process. | `1000` |
+| `--conf {value}` | Custom confidence threshold. | `0.25` |
+| `--output {path}` | Path to output folder. | `./outputs` |
+| `--peek` | Run in [Peek Mode](#sharktrack-peek-mode). | — |
+| `--chapters` | Aggregate video chapters into one single video. | — |
+| `--resume` | Skip videos already analysed in the output path. | — |
+
+**Example:**
+```bash
+python app.py --input G:\BRUVS_2023 --peek --stereo_prefix L
+```
+*Runs SharkTrack peek mode on all videos from `G:\BRUVS_2023` starting with "L".*
+
+---
+
+## SharkTrack Peek Mode
+
+Use SharkTrack to extract interesting frames without full tracking. This "peek" version runs **5x faster**, taking ~15% of real video time.
+
+Activate with the `--peek` argument:
+```bash
+python app.py --peek
+```
+
+The output will contain a `peek_frames/` folder listing all detections.
+
+<Aside type="caution">
+  Peek mode only outputs frames — it cannot compute MaxN. We recommend trying the default mode first for finer-grained and more accurate information.
+</Aside>
+
+---
+
+## Performance
+
+| Mode | Feature | Inference Time | Limitations | Best For |
+|------|---------|---------------|-------------|----------|
+| `analyst` (default) | Compute MaxN | ~27 min per video-hour | Slower; some GoPro versions unsupported | Species-ID and MaxN |
+| `peek` | Extract frames | ~9 min per video-hour | No annotation support; more frames to review | Quick frame extraction |
+
+The pipeline is designed to minimise False Positives. It uses a very low confidence threshold to ensure close to all sharks are detected, but this causes ~5x "garbage detections" which the user manually rejects.
+
+---
+
+## Troubleshooting
+
+### Installation and Setup
+
+- **Terminal says I need `git`** — Install it from [git-scm.com](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), or download the source code from [releases](https://github.com/filippovarini/sharktrack/releases).
+- **`python -m venv venv` says `python` not found** — Try `python3 -m venv venv` or `py -m venv venv`.
+- **`venv` module not found** — Check your Python version (`python --version`). Ensure it's 3.9+. If not, download from [python.org](https://www.python.org/downloads/).
+
+### GoPro Limitation
+
+If you see the warning:
+```
+[ WARN:0@379.898] global cap_ffmpeg_impl.hpp:1541 grabFrame packet read max attempts exceeded...
+```
+
+Your GoPro version is incompatible. Use the provided reformatting script:
+
+<Aside type="note">
+  You need `ffmpeg` installed. Check with `ffmpeg -version`. If missing, download from [ffmpeg.org](https://ffmpeg.org/download.html).
+</Aside>
+
+```bash
+python utils/reformat_gopro.py --input {Original video folder} --output {New video folder}
+```
+
+**Recommended GoPro workflow:**
+1. Collect BRUVS videos
+2. Transfer from SD card using the reformat script:
+   ```bash
+   python utils/reformat_gopro.py --input PATH_TO_SD --output COPY_DESTINATION
+   ```
+3. Run SharkTrack overnight:
+   ```bash
+   python app.py --input COPY_DESTINATION
+   ```
+
+---
+
+## Next Steps
+
+<LinkCard
+  title="Annotation Pipeline"
+  description="Learn how to review SharkTrack's output and compute species-specific MaxN metrics."
+  href="/sharktrack/annotation-pipeline/"
+/>

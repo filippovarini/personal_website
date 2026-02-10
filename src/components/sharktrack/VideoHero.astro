@@ -1,0 +1,63 @@
+---
+/**
+ * VideoHero - Full-width hero section with video background.
+ *
+ * Usage in MDX:
+ *   <VideoHero videoSrc="/videos/sharktrack-demo.mp4" posterSrc="/images/poster.jpg">
+ *     <a href="#overview" class="st-btn st-btn--primary">Learn</a>
+ *     <a href="/sharktrack/user-guide/" class="st-btn st-btn--secondary">Get Started</a>
+ *   </VideoHero>
+ *
+ * Props:
+ *   - title: Main heading (default: "SharkTrack")
+ *   - tagline: Subtitle text
+ *   - videoSrc: URL to the background video (mp4). Leave empty for placeholder.
+ *   - posterSrc: Poster image shown before video loads.
+ */
+interface Props {
+  title?: string;
+  tagline?: string;
+  videoSrc?: string;
+  posterSrc?: string;
+}
+
+const {
+  title = "SharkTrack",
+  tagline = "A software that detects sharks and rays in underwater videos and computes MaxN 21x faster, with machine learning.",
+  videoSrc = "",
+  posterSrc = "",
+} = Astro.props;
+---
+
+<section class="video-hero">
+  <div class="video-hero__bg">
+    {videoSrc ? (
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        poster={posterSrc}
+        class="video-hero__video"
+      >
+        <source src={videoSrc} type="video/mp4" />
+      </video>
+    ) : (
+      <div class="video-hero__placeholder">
+        <div class="video-hero__placeholder-content">
+          <span class="video-hero__placeholder-icon">🎬</span>
+          <p>Add your shark tracking video here</p>
+          <small>Pass a <code>videoSrc</code> prop to this component</small>
+        </div>
+      </div>
+    )}
+  </div>
+  <div class="video-hero__overlay" />
+  <div class="video-hero__content">
+    <h1 class="video-hero__title">{title}</h1>
+    <p class="video-hero__tagline">{tagline}</p>
+    <div class="video-hero__actions">
+      <slot />
+    </div>
+  </div>
+</section>

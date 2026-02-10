@@ -1,0 +1,265 @@
+---
+/**
+ * GlobeMap - Interactive 3D globe showing SharkTrack usage locations.
+ *
+ * Uses the `cobe` library (lightweight WebGL globe).
+ * Each location appears as a marker on the globe. Clicking a location chip
+ * rotates the globe to that position and shows project details in a side panel.
+ *
+ * Props:
+ *   - locations: Array of location objects. Falls back to built-in defaults.
+ *
+ * To add a new location, add an entry to the `defaultLocations` array below,
+ * or pass a `locations` prop from the MDX page.
+ */
+interface Location {
+  name: string;
+  lat: number;
+  lng: number;
+  description: string;
+  link?: string;
+  image?: string;
+}
+
+interface Props {
+  locations?: Location[];
+}
+
+const defaultLocations: Location[] = [
+  {
+    name: "Anguilla",
+    lat: 18.22,
+    lng: -63.07,
+    description: "University of Exeter and Anguilla National Trust",
+    link: "https://www.linkedin.com/posts/filippo-varini_we-are-back-from-university-of-exeter-activity-7167899292593065985-dZLo",
+  },
+  {
+    name: "Revillagigedo, Mexico",
+    lat: 18.83,
+    lng: -110.98,
+    description: "Pelagios Kakunja",
+    link: "https://youtu.be/NeBcpscTc3M",
+  },
+  {
+    name: "La Paz, Mexico",
+    lat: 24.14,
+    lng: -110.31,
+    description: "Pelagios Kakunja",
+  },
+  {
+    name: "N. Gulf of California",
+    lat: 31.0,
+    lng: -114.5,
+    description: "Pelagios Kakunja",
+  },
+  {
+    name: "Maldives",
+    lat: 3.2,
+    lng: 73.22,
+    description: "University of Leeds",
+  },
+  {
+    name: "Cabo Verde",
+    lat: 16.0,
+    lng: -24.0,
+    description: "Dr. Francesco Garzon and Adam Whiting, University of Exeter",
+  },
+  {
+    name: "Red Sea",
+    lat: 22.0,
+    lng: 38.0,
+    description: "Dr. Francesco Garzon, University of Exeter",
+  },
+  {
+    name: "Cape Cod, USA",
+    lat: 41.67,
+    lng: -70.3,
+    description: "Virginia Tech University",
+  },
+  {
+    name: "Hawaii, USA",
+    lat: 19.9,
+    lng: -155.58,
+    description: "Virginia Tech University",
+  },
+  {
+    name: "Azores",
+    lat: 38.72,
+    lng: -27.22,
+    description: "Okeanos Institute of Marine Sciences",
+  },
+  {
+    name: "Thailand",
+    lat: 13.76,
+    lng: 100.5,
+    description: "Thai Sharks and Rays & Thai DMCR",
+    link: "https://www.reshark.org/star-project",
+  },
+  {
+    name: "Scotland, UK",
+    lat: 56.49,
+    lng: -4.2,
+    description: "Tash Yates, Edinburgh Napier University",
+  },
+  {
+    name: "Las Perlas, Panama",
+    lat: 8.35,
+    lng: -79.05,
+    description: "Maralliance",
+    link: "https://maralliance.org/",
+  },
+];
+
+const { locations = defaultLocations } = Astro.props;
+---
+
+<section class="globe-section" id="users-worldwide">
+  <h2 class="globe-section__title">Users Worldwide</h2>
+  <p class="globe-section__subtitle">
+    Used by <strong>{locations.length}</strong> research groups across the globe
+  </p>
+
+  <div class="globe-section__layout">
+    <div class="globe-section__canvas-wrap">
+      <canvas id="cobe-globe"></canvas>
+    </div>
+    <div class="globe-section__panel" id="globe-info-panel">
+      <p class="globe-section__panel-hint">Click a location to explore</p>
+    </div>
+  </div>
+
+  <div class="globe-section__chips" id="location-chips">
+    {locations.map((loc) => (
+      <button
+        class="location-chip"
+        data-lat={loc.lat}
+        data-lng={loc.lng}
+        data-name={loc.name}
+        data-description={loc.description}
+        data-link={loc.link || ""}
+        data-image={loc.image || ""}
+      >
+        <span class="location-chip__dot" />
+        {loc.name}
+      </button>
+    ))}
+  </div>
+</section>
+
+<script>
+  import createGlobe from "cobe";
+
+  const canvas = document.getElementById("cobe-globe") as HTMLCanvasElement;
+
+  if (canvas) {
+    let currentPhi = 0;
+    let focusPhi = 0;
+    let focusTheta = 0.25;
+    let isFocused = false;
+    let width = 0;
+
+    const chips = document.querySelectorAll(".location-chip");
+    const infoPanel = document.getElementById("globe-info-panel");
+
+    // Convert lat/lng to cobe's phi/theta coordinate system
+    function locationToAngles(lat: number, lng: number): [number, number] {
+      return [
+        Math.PI - ((lng * Math.PI) / 180 - Math.PI / 2),
+        (lat * Math.PI) / 180,
+      ];
+    }
+
+    // Build marker array from location chip data attributes
+    const markers = Array.from(chips).map((btn) => {
+      const lat = parseFloat(btn.getAttribute("data-lat") || "0");
+      const lng = parseFloat(btn.getAttribute("data-lng") || "0");
+      return { location: [lat, lng] as [number, number], size: 0.07 };
+    });
+
+    // Handle responsive sizing
+    const onResize = () => {
+      if (canvas.parentElement) {
+        width = canvas.parentElement.offsetWidth;
+      }
+    };
+    window.addEventListener("resize", onResize);
+    onResize();
+
+    // Initialize cobe globe
+    const globe = createGlobe(canvas, {
+      devicePixelRatio: 2,
+      width: width * 2,
+      height: width * 2,
+      phi: 0,
+      theta: 0.25,
+      dark: 1,
+      diffuse: 1.2,
+      mapSamples: 20000,
+      mapBrightness: 6,
+      baseColor: [0.05, 0.2, 0.4],
+      markerColor: [0.1, 0.8, 1.0],
+      glowColor: [0.05, 0.15, 0.3],
+      markers,
+      onRender: (state: Record<string, number>) => {
+        if (!isFocused) {
+          currentPhi += 0.005;
+        } else {
+          currentPhi += (focusPhi - currentPhi) * 0.08;
+          state.theta += (focusTheta - state.theta) * 0.08;
+        }
+        state.phi = currentPhi;
+        state.width = width * 2;
+        state.height = width * 2;
+      },
+    });
+
+    // Handle location chip clicks
+    chips.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lat = parseFloat(btn.getAttribute("data-lat") || "0");
+        const lng = parseFloat(btn.getAttribute("data-lng") || "0");
+        const name = btn.getAttribute("data-name") || "";
+        const description = btn.getAttribute("data-description") || "";
+        const link = btn.getAttribute("data-link") || "";
+        const image = btn.getAttribute("data-image") || "";
+
+        // Rotate globe to location
+        const [p, t] = locationToAngles(lat, lng);
+        focusPhi = p;
+        focusTheta = t;
+        isFocused = true;
+
+        // Update active chip
+        chips.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        // Update info panel
+        if (infoPanel) {
+          let html = `<div class="globe-info-card">
+            <h3>${name}</h3>
+            <p>${description}</p>`;
+          if (image) {
+            html += `<img src="${image}" alt="${name}" class="globe-info-card__image" />`;
+          } else {
+            html += `<div class="globe-info-card__image-placeholder">📷 Add project image</div>`;
+          }
+          if (link) {
+            html += `<a href="${link}" target="_blank" rel="noopener noreferrer" class="globe-info-card__link">Learn more →</a>`;
+          }
+          html += `</div>`;
+          infoPanel.innerHTML = html;
+        }
+
+        // Resume auto-rotation after 4 seconds
+        setTimeout(() => {
+          isFocused = false;
+        }, 4000);
+      });
+    });
+
+    // Cleanup on page navigation (Astro View Transitions)
+    document.addEventListener("astro:before-swap", () => {
+      globe.destroy();
+    });
+  }
+</script>

@@ -1,0 +1,21 @@
+---
+/**
+ * FeatureCard - A card highlighting a key feature of SharkTrack.
+ *
+ * Usage in MDX:
+ *   <FeatureCard icon="🏃‍♀️" title="21x Faster" description="Computes MaxN semi-automatically." />
+ */
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const { icon, title, description } = Astro.props;
+---
+
+<div class="feature-card">
+  <span class="feature-card__icon">{icon}</span>
+  <h3 class="feature-card__title">{title}</h3>
+  <p class="feature-card__description">{description}</p>
+</div>

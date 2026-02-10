@@ -1,0 +1,603 @@
+/* ==========================================================================
+   SharkTrack Documentation Styles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Video Hero
+   -------------------------------------------------------------------------- */
+.video-hero {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.video-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.video-hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-hero__placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #001a2c 0%, #003a5c 40%, #00567a 70%, #002a44 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hero-shimmer 8s ease-in-out infinite alternate;
+}
+
+@keyframes hero-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.video-hero__placeholder-content {
+  text-align: center;
+  color: var(--sl-color-gray-3);
+  font-size: 0.9rem;
+}
+
+.video-hero__placeholder-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.video-hero__placeholder-content code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.video-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 20, 35, 0.4) 0%,
+    rgba(0, 20, 35, 0.7) 100%
+  );
+  z-index: 1;
+}
+
+.video-hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+.video-hero__title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.video-hero__tagline {
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 2rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+.video-hero__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Action Buttons (used in VideoHero and elsewhere)
+   -------------------------------------------------------------------------- */
+.st-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.st-btn--primary {
+  background: var(--sl-color-accent);
+  color: #ffffff;
+  border-color: var(--sl-color-accent);
+}
+
+.st-btn--primary:hover {
+  background: var(--sl-color-accent-high);
+  border-color: var(--sl-color-accent-high);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 113, 167, 0.3);
+}
+
+.st-btn--secondary {
+  background: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.st-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Globe Section
+   -------------------------------------------------------------------------- */
+.globe-section {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 4rem 2rem;
+  background: linear-gradient(180deg, #001220 0%, #001a2e 100%);
+  text-align: center;
+}
+
+.globe-section__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+}
+
+.globe-section__subtitle {
+  color: var(--sl-color-gray-3);
+  margin: 0 0 2.5rem;
+  font-size: 1.1rem;
+}
+
+.globe-section__layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  flex-wrap: wrap;
+}
+
+.globe-section__canvas-wrap {
+  flex: 1 1 400px;
+  max-width: 500px;
+  aspect-ratio: 1;
+}
+
+.globe-section__canvas-wrap canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.globe-section__panel {
+  flex: 1 1 280px;
+  max-width: 350px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.globe-section__panel-hint {
+  color: var(--sl-color-gray-3);
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* Globe info card (dynamically injected) */
+.globe-info-card {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  animation: fade-in 0.3s ease;
+}
+
+.globe-info-card h3 {
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.globe-info-card p {
+  color: var(--sl-color-gray-2);
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.globe-info-card__image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.globe-info-card__image-placeholder {
+  width: 100%;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: var(--sl-color-gray-4);
+  text-align: center;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.globe-info-card__link {
+  color: var(--sl-color-accent-high);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.globe-info-card__link:hover {
+  text-decoration: underline;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Location chips */
+.globe-section__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.location-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+  color: var(--sl-color-gray-2);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.location-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.location-chip.active {
+  background: rgba(0, 113, 167, 0.25);
+  border-color: var(--sl-color-accent);
+  color: #ffffff;
+}
+
+.location-chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sl-color-accent);
+  flex-shrink: 0;
+}
+
+.location-chip.active .location-chip__dot {
+  box-shadow: 0 0 6px var(--sl-color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Feature Cards
+   -------------------------------------------------------------------------- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.feature-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+:root[data-theme="light"] .feature-card {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .feature-card:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.feature-card__icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.feature-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.feature-card__description {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--sl-color-gray-3);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Section Navigation (floating sidebar on landing page)
+   -------------------------------------------------------------------------- */
+.section-nav {
+  position: fixed;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.section-nav.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.section-nav__heading {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sl-color-gray-4);
+  margin-bottom: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.section-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme="light"] .section-nav__list {
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+
+.section-nav__link {
+  display: block;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  color: var(--sl-color-gray-3);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  margin-left: -2px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.section-nav__link:hover {
+  color: var(--sl-color-gray-1);
+}
+
+.section-nav__link.active {
+  color: var(--sl-color-accent-high);
+  border-left-color: var(--sl-color-accent);
+  font-weight: 500;
+}
+
+/* Hide floating nav on small screens (not enough room) */
+@media (max-width: 1200px) {
+  .section-nav {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Guide Link Cards (landing page)
+   -------------------------------------------------------------------------- */
+.guide-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.guide-card:hover {
+  background: rgba(0, 113, 167, 0.1);
+  border-color: var(--sl-color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 113, 167, 0.15);
+}
+
+:root[data-theme="light"] .guide-card {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="light"] .guide-card:hover {
+  background: rgba(0, 113, 167, 0.05);
+}
+
+.guide-card__icon {
+  font-size: 2rem;
+}
+
+.guide-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--sl-color-white);
+}
+
+.guide-card__desc {
+  font-size: 0.9rem;
+  color: var(--sl-color-gray-3);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   SharkTrack content wrapper (landing page body sections)
+   -------------------------------------------------------------------------- */
+.st-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.st-content section {
+  margin-bottom: 4rem;
+}
+
+.st-content h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.st-content h3 {
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.st-content blockquote {
+  border-left: 3px solid var(--sl-color-accent);
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem 0;
+  background: rgba(0, 113, 167, 0.08);
+  border-radius: 0 8px 8px 0;
+}
+
+.st-content blockquote p {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Doc pages: Step blocks for user guide & annotation pipeline
+   -------------------------------------------------------------------------- */
+.step-block {
+  position: relative;
+  padding-left: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.step-block::before {
+  content: attr(data-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--sl-color-accent);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Code blocks in doc pages */
+.st-code-title {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.5rem 1rem;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: none;
+  font-size: 0.82rem;
+  color: var(--sl-color-gray-3);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .video-hero {
+    min-height: 60vh;
+  }
+
+  .video-hero__content {
+    padding: 1.5rem;
+  }
+
+  .globe-section {
+    padding: 3rem 1rem;
+  }
+
+  .globe-section__layout {
+    flex-direction: column;
+  }
+
+  .globe-section__canvas-wrap {
+    max-width: 350px;
+  }
+
+  .globe-section__panel {
+    max-width: 100%;
+  }
+
+  .st-content {
+    padding: 2rem 1rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
