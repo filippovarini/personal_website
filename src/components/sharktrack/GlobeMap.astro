@@ -152,11 +152,15 @@ const { locations = defaultLocations } = Astro.props;
   const canvas = document.getElementById("cobe-globe") as HTMLCanvasElement;
 
   if (canvas) {
+    const TWO_PI = Math.PI * 2;
+
     let currentPhi = 0;
+    let currentTheta = 0.25;
     let focusPhi = 0;
     let focusTheta = 0.25;
     let isFocused = false;
     let width = 0;
+    let focusTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const chips = document.querySelectorAll(".location-chip");
     const infoPanel = document.getElementById("globe-info-panel");
@@ -185,6 +189,15 @@ const { locations = defaultLocations } = Astro.props;
     window.addEventListener("resize", onResize);
     onResize();
 
+    // Also observe layout changes (e.g. when info panel content changes the
+    // flex layout, the canvas wrapper may resize without a window resize event)
+    if (canvas.parentElement && typeof ResizeObserver !== "undefined") {
+      new ResizeObserver(onResize).observe(canvas.parentElement);
+    }
+
+    // Ensure we have a usable width even if the parent hasn't been laid out yet
+    if (width === 0) width = 400;
+
     // Initialize cobe globe
     const globe = createGlobe(canvas, {
       devicePixelRatio: 2,
@@ -193,7 +206,7 @@ const { locations = defaultLocations } = Astro.props;
       phi: 0,
       theta: 0.25,
       dark: 1,
-      diffuse: 1.2,
+      diffuse: 3,
       mapSamples: 20000,
       mapBrightness: 6,
       baseColor: [0.05, 0.2, 0.4],
@@ -204,10 +217,17 @@ const { locations = defaultLocations } = Astro.props;
         if (!isFocused) {
           currentPhi += 0.005;
         } else {
-          currentPhi += (focusPhi - currentPhi) * 0.08;
-          state.theta += (focusTheta - state.theta) * 0.08;
+          // Shortest-path interpolation: wrap the difference to [-π, π]
+          // so the globe always takes the shortest rotation to the target
+          const diff =
+            ((focusPhi - currentPhi) % TWO_PI + 3 * Math.PI) % TWO_PI -
+            Math.PI;
+          currentPhi += diff * 0.08;
+          currentTheta += (focusTheta - currentTheta) * 0.08;
         }
+
         state.phi = currentPhi;
+        state.theta = currentTheta;
         state.width = width * 2;
         state.height = width * 2;
       },
@@ -250,8 +270,11 @@ const { locations = defaultLocations } = Astro.props;
           infoPanel.innerHTML = html;
         }
 
+        // Clear any previous timeout to prevent early auto-rotation resume
+        if (focusTimeout) clearTimeout(focusTimeout);
+
         // Resume auto-rotation after 4 seconds
-        setTimeout(() => {
+        focusTimeout = setTimeout(() => {
           isFocused = false;
         }, 4000);
       });
