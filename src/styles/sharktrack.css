@@ -7,7 +7,7 @@
    -------------------------------------------------------------------------- */
 .video-hero {
   position: relative;
-  top: -50px;
+  top: -20px;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   height: 100vh;
@@ -195,18 +195,18 @@ main:has(.video-hero) .sl-container > * + * {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   padding: 4rem 2rem;
-  background: linear-gradient(180deg, #001220 0%, #001a2e 100%);
+  background: #001220;
   text-align: center;
 }
 
 .globe-section__title {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
-  color: #ffffff;
+  color: #ffffff !important;
   margin: 0 0 0.5rem;
 }
 
 .globe-section__subtitle {
-  color: var(--sl-color-gray-3);
+  color: rgba(255, 255, 255, 0.75);
   margin: 0 0 2.5rem;
   font-size: 1.1rem;
 }
@@ -242,7 +242,7 @@ main:has(.video-hero) .sl-container > * + * {
 }
 
 .globe-section__panel-hint {
-  color: var(--sl-color-gray-3);
+  color: rgba(255, 255, 255, 0.6);
   font-style: italic;
   font-size: 0.95rem;
 }
@@ -264,7 +264,7 @@ main:has(.video-hero) .sl-container > * + * {
 }
 
 .globe-info-card p {
-  color: var(--sl-color-gray-2);
+  color: rgba(255, 255, 255, 0.8);
   margin: 0 0 1rem;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -322,7 +322,7 @@ main:has(.video-hero) .sl-container > * + * {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50px;
-  color: var(--sl-color-gray-2);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.82rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -397,12 +397,13 @@ main:has(.video-hero) .sl-container > * + * {
 .feature-card__title {
   margin: 0 0 0.5rem;
   font-size: 1.15rem;
+  color: #ffffff;
 }
 
 .feature-card__description {
   margin: 0;
   font-size: 0.92rem;
-  color: var(--sl-color-gray-3);
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.5;
 }
 
@@ -525,7 +526,7 @@ main:has(.video-hero) .sl-container > * + * {
 
 .guide-card__desc {
   font-size: 0.9rem;
-  color: var(--sl-color-gray-3);
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1.5;
 }
 
@@ -536,6 +537,7 @@ main:has(.video-hero) .sl-container > * + * {
   max-width: 800px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .st-content section {
@@ -546,24 +548,44 @@ main:has(.video-hero) .sl-container > * + * {
   font-size: clamp(1.5rem, 3vw, 2rem);
   margin-bottom: 1rem;
   padding-top: 1rem;
+  color: #ffffff !important;
 }
 
 .st-content h3 {
   font-size: 1.2rem;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.st-content p,
+.st-content li {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.st-content a:not(.st-btn):not(.guide-card) {
+  color: #5cc8f0;
+}
+
+.st-content a:not(.st-btn):not(.guide-card):hover {
+  color: #8adcf8;
+}
+
+.st-content strong {
+  color: #ffffff;
 }
 
 .st-content blockquote {
   border-left: 3px solid var(--sl-color-accent);
   padding: 0.75rem 1.25rem;
   margin: 1.5rem 0;
-  background: rgba(0, 113, 167, 0.08);
+  background: rgba(0, 113, 167, 0.12);
   border-radius: 0 8px 8px 0;
 }
 
 .st-content blockquote p {
   margin: 0;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* --------------------------------------------------------------------------
@@ -601,7 +623,7 @@ main:has(.video-hero) .sl-container > * + * {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: none;
   font-size: 0.82rem;
-  color: var(--sl-color-gray-3);
+  color: rgba(255, 255, 255, 0.65);
   font-weight: 500;
 }
 
