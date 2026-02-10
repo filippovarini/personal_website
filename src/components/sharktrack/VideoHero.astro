@@ -24,7 +24,7 @@ interface Props {
 const {
   title = "SharkTrack",
   tagline = "A software that detects sharks and rays in underwater videos and computes MaxN 21x faster, with machine learning.",
-  videoSrc = "",
+  videoSrc = "/src/assets/revilla-tracked.mp4",
   posterSrc = "",
 } = Astro.props;
 ---
@@ -52,7 +52,6 @@ const {
       </div>
     )}
   </div>
-  <div class="video-hero__overlay" />
   <div class="video-hero__content">
     <h1 class="video-hero__title">{title}</h1>
     <p class="video-hero__tagline">{tagline}</p>

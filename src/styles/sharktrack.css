@@ -7,12 +7,13 @@
    -------------------------------------------------------------------------- */
 .video-hero {
   position: relative;
+  top: -50px;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  min-height: 80vh;
+  height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
 }
 
@@ -62,48 +63,96 @@
   font-size: 0.85em;
 }
 
-.video-hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 20, 35, 0.4) 0%,
-    rgba(0, 20, 35, 0.7) 100%
-  );
-  z-index: 1;
-}
-
 .video-hero__content {
   position: relative;
   z-index: 2;
-  text-align: center;
-  padding: 2rem;
-  max-width: 800px;
+  text-align: left;
+  padding: 2.5rem 2.5rem;
+  max-width: 480px;
+  margin-left: 4vw;
+  /* Liquid glass effect */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .video-hero__title {
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 800;
-  color: #ffffff;
+  color: #ffffff !important;
   margin: 0 0 1rem;
   letter-spacing: -0.02em;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .video-hero__tagline {
-  font-size: clamp(1rem, 2.5vw, 1.35rem);
-  color: rgba(255, 255, 255, 0.85);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #ffffff !important;
   margin: 0 0 2rem;
   line-height: 1.6;
-  max-width: 600px;
-  margin-inline: auto;
 }
 
 .video-hero__actions {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* ── Starlight overrides for VideoHero landing page ── */
+
+/* Make header transparent so video extends behind it */
+.page:has(.video-hero) > .header {
+  background-color: transparent !important;
+  border-bottom: none !important;
+}
+
+/* Remove top padding from main-frame so content starts at the very top */
+.page:has(.video-hero) > .main-frame {
+  padding-top: 0 !important;
+}
+
+/* Kill any background that leaks through as a white strip */
+html:has(.video-hero),
+html:has(.video-hero) body,
+.page:has(.video-hero) {
+  background-color: #001220 !important;
+}
+
+/* Hide the auto-generated PageTitle panel (first content-panel) */
+main:has(.video-hero) > .content-panel:first-child {
+  display: none;
+}
+
+/* Remove ALL padding, margin, and borders from content panels */
+main:has(.video-hero) > .content-panel {
+  padding: 0;
+  border: none;
+}
+
+main:has(.video-hero) .content-panel + .content-panel {
+  border-top: none;
+}
+
+/* Let the content break out of Starlight's max-width container */
+main:has(.video-hero) .sl-container {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* Remove all spacing from main */
+main:has(.video-hero) {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Remove Starlight's default gap between sibling elements inside the container */
+main:has(.video-hero) .sl-container > * + * {
+  margin-top: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -112,40 +161,31 @@
 .st-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.75rem;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: all 0.2s ease;
   cursor: pointer;
-  border: 2px solid transparent;
+  /* Shared glass style for both buttons */
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  flex: 1;
+  min-width: 120px;
 }
 
-.st-btn--primary {
-  background: var(--sl-color-accent);
-  color: #ffffff;
-  border-color: var(--sl-color-accent);
-}
-
-.st-btn--primary:hover {
-  background: var(--sl-color-accent-high);
-  border-color: var(--sl-color-accent-high);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 113, 167, 0.3);
-}
-
-.st-btn--secondary {
-  background: transparent;
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.st-btn--secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
+.st-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
   border-color: rgba(255, 255, 255, 0.7);
+  color: #ffffff !important;
   transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1);
 }
 
 /* --------------------------------------------------------------------------
@@ -570,11 +610,12 @@
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .video-hero {
-    min-height: 60vh;
+    height: 100vh;
   }
 
   .video-hero__content {
     padding: 1.5rem;
+    max-width: 100%;
   }
 
   .globe-section {
