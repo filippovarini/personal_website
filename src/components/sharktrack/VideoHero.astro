@@ -14,6 +14,8 @@
  *   - videoSrc: URL to the background video (mp4). Leave empty for placeholder.
  *   - posterSrc: Poster image shown before video loads.
  */
+import defaultVideo from "../../assets/sharktrack/revilla-tracked.mp4";
+
 interface Props {
   title?: string;
   tagline?: string;
@@ -24,7 +26,7 @@ interface Props {
 const {
   title = "SharkTrack",
   tagline = "A software that detects sharks and rays in underwater videos and computes MaxN 21x faster, with machine learning.",
-  videoSrc = "/src/assets/revilla-tracked.mp4",
+  videoSrc = defaultVideo,
   posterSrc = "",
 } = Astro.props;
 ---

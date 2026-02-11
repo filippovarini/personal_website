@@ -14,6 +14,27 @@
  */
 import defaultLocations from "../../assets/sharktrack/example_usages/usages.json";
 
+// Eagerly import every image in the example_usages directory so Astro can
+// optimise, hash, and bundle them during the build.  Adding a new image file
+// to this folder is all that's needed — the glob picks it up automatically.
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "../../assets/sharktrack/example_usages/*.{jpg,jpeg,png,webp,gif,avif}",
+  { eager: true },
+);
+
+// Build a filename → resolved-URL lookup so we can map the JSON paths to the
+// real production URLs (e.g. "/_astro/anguilla.D3xK8f.jpg").
+const imageByFilename: Record<string, string> = {};
+for (const [path, mod] of Object.entries(imageModules)) {
+  const filename = path.split("/").pop()!;
+  imageByFilename[filename] = mod.default.src;
+}
+
+function resolveImageUrl(rawPath: string): string {
+  const filename = rawPath.split("/").pop() || "";
+  return imageByFilename[filename] || rawPath;
+}
+
 interface Location {
   name: string;
   lat: number;
@@ -27,7 +48,10 @@ interface Props {
   locations?: Location[];
 }
 
-const typedDefaultLocations = defaultLocations as Location[];
+const typedDefaultLocations = (defaultLocations as Location[]).map((loc) => ({
+  ...loc,
+  image: loc.image ? resolveImageUrl(loc.image) : undefined,
+}));
 
 const { locations = typedDefaultLocations } = Astro.props;
 ---
