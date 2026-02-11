@@ -7,56 +7,92 @@ import { Aside, LinkCard } from "@astrojs/starlight/components";
 
 ## Overview
 
-After running SharkTrack on your videos, you need to convert the raw output to MaxN metrics. This involves two steps:
+After running SharkTrack on your videos, you’ll do two things: **review the output** and then **compute MaxN**.
 
-1. **Cleaning the Output** — Delete wrong detections and assign species ID to correct ones.
-2. **Extract MaxN** — Generate species-specific MaxN from the cleaned output.
+1. **Review (clean + label)** — Delete false detections and label true detections with a species ID.
+2. **Compute MaxN** — Generate species-specific MaxN metrics from your reviewed output.
 
 <Aside type="tip">
-  If you haven't run SharkTrack yet, start with the [User Guide](/sharktrack/user-guide/).
+  If you haven't run SharkTrack on the videos yet, start with [Step 1: Automatic Processing](/sharktrack/user-guide/).
 </Aside>
 
 ---
 
 ## Understand the Output
 
-> **TL;DR:** When SharkTrack detects a shark, it tracks it across frames generating a "Shark Track". Results are saved in `output.csv` and for each track, a frame is stored where it was detected. You only need to validate/classify each shark once — SharkTrack handles the tracking!
+> **TL;DR:** SharkTrack groups consecutive detections of the same animal into a **track** (with an ID). For each track, it saves **one** screenshot (`.jpg`) that you can review quickly. Your labels (via filenames) are then used to compute MaxN.
+
+### Output folder structure
 
 Locate your output directory (default: `./output`). It contains:
 
 | File / Folder | Description |
 |---|---|
-| `output.csv` | Lists each detection at each timeframe for each video |
-| `detections/` | For each tracked elasmobranch, the `.jpg` frame where its track achieved highest confidence |
-| `overview.csv` | Lists all videos processed and tracks found in each |
+| `internal_results/output.csv` | Raw detections (per frame/time) |
+| `internal_results/overview.csv` | Summary per video (number of tracks found) |
+| `internal_results/*/` | One subfolder per video |
+| `internal_results/*/<track_id>.jpg` | One screenshot per track (this is what you review) |
 
 {/* TODO: Add a screenshot of a detection example image here */}
 {/* ![Detection example](../../../assets/detection.jpg) */}
 
-### Output FAQ
+
+### How to read a detection screenshot
+
+In each video folder you will see **one screenshot per track**. The screenshot shows a bounding box around the shark/ray you should label.
+
+![Detection example](../../../assets/sharktrack/example_detection.jpg)
+
+The screenshot also shows the video file and timestamp, so you can refer back to the original footage when you’re unsure.
+
+<Aside type="note">
+  You might see multiple animals in the frame, but SharkTrack saves one screenshot per track, so you will always see only one bounding box. Only focus on the animal in the bounding box.
+</Aside>
+
+
+---
+
+## Step 1: Review (Clean + Label)
+
+1. For each video, open its output subfolder. It contains detection files named `{track_id}.jpg`.
+2. Scroll through the images and focus on the animal inside the bounding box.
+3. If it’s not a shark/ray, delete the file.
+4. If it is a shark/ray, rename the file from `{track_id}.jpg` to `{track_id}-{species}.jpg`.
+
+**Example:** `5.jpg` → `5-great_hammerhead.jpg`
+
+<Aside type="caution">
+  Keep the original `track_id` number at the start of the filename. The MaxN script uses it to match your label back to the track.
+</Aside>
+
+<Aside type="note">
+  The `{species}` part can be any text. For consistency, prefer lowercase with underscores (e.g. `scalloped_hammerhead`, `manta_ray`, `unknown`).
+</Aside>
+
+### FAQ
 
 <details>
 <summary><strong>What is a track?</strong></summary>
 
-The same elasmobranch appears in multiple consecutive frames. A track is a bounding box with an ID saying "this is the same shark I found before."
+The same elasmobranch appears in multiple consecutive frames. A track is SharkTrack’s “this is the same animal I saw before” group, with an ID.
 </details>
 
 <details>
-<summary><strong>What is a max-conf-detection?</strong></summary>
+<summary><strong>Why are there multiple animals in the screenshot, but only one bounding box?</strong></summary>
 
-Each track is made up of detections at different times, each with a confidence score. The max-conf-detection is the frame/time/bounding box with the highest score — its image is saved in the detection folder.
+SharkTrack saves one screenshot per track, so you will always see only one bounding box. Only label the animal in the bounding box.
 </details>
 
 <details>
 <summary><strong>Why does this matter?</strong></summary>
 
-You only need to process one annotation per track instead of thousands of frames. A script automatically reflects your changes on every detection for the track when computing MaxN.
+You only need to label one screenshot per track instead of thousands of frames. The script applies your label to all detections in that track when computing MaxN.
 </details>
 
 <details>
 <summary><strong>One frame isn't enough to determine species</strong></summary>
 
-Each detection image shows the video path and time, so you can go back to the original video and use it to assign a species.
+Each detection image shows the video name/path and timestamp, so you can go back to the original video to confirm the species.
 </details>
 
 <details>
@@ -65,53 +101,11 @@ Each detection image shows the video path and time, so you can go back to the or
 The model may split the same shark into two or more consecutive tracks. Classify all of them — this won't affect MaxN accuracy, it just requires classifying more images.
 </details>
 
----
 
-## Cleaning the Output
-
-Here, **detections** are the images showing the highest-confidence detection of each Track.
-
-You need to:
-- **Reject** tracks that are not elasmobranchii (delete the file)
-- **Assign Species ID** to correct detections (rename the file)
-
-### Understanding Detection Images
-
-Each detection image highlights:
-- The tracked elasmobranch with a **thick** bounding box
-- Other detections in the same frame with **thin** bounding boxes
-
-{/* TODO: Add detection example images showing thick/thin boxes */}
-
-The thin boxes tell you that those additional sharks have their own detection image in the same folder. If you see a shark with no box around it, the model missed it.
-
-### Cleaning Examples
-
-| Action | When |
-|--------|------|
-| **Confirm & assign species** | The thick box clearly shows an elasmobranch |
-| **Reject (delete)** | The thick box shows something that is not an elasmobranch |
-| **Reject (already exists)** | The elasmobranch in the thick box already has its own detection in a thin box |
-
-### Step-by-Step Annotation
-
-1. For each video, open the respective folder. It contains detection files named `{track_id}.jpg`.
-2. Scroll through all images and locate the **thick** bounding box (that is the detection you are classifying).
-3. **If not an elasmobranch** → Delete the file.
-4. **If an elasmobranch** → Rename the file with the species ID, **keeping the original number** separated by a `-`.
-
-**Example:** `1.jpg` → `1-scalloped_hammerhead.jpg`
-
-<Aside type="caution">
-  Keep the original `track_id` number and separate it from the species name with a `-`. You can use any species ID naming convention.
-</Aside>
-
-{/* TODO: Add screenshot showing the file renaming process */}
-{/* ![Renaming example](../../../assets/local-cleaning.png) */}
 
 ### Pro Tips
 
-- Do a **first pass** to remove all wrong detections, then assign species ID in a **second pass**.
+- Do a first pass to remove wrong detections, then assign species labels in a second pass.
 - **Unsure about species/validity?** Check the text at the bottom of the detection image for the video name and timestamp, then review the original video.
 - **Windows shortcuts:** `F2` to rename, `Ctrl+D` to delete.
 - **macOS shortcuts:** Gallery view, `Cmd+Delete` to remove, `Enter` to rename.
@@ -122,9 +116,9 @@ Want multiple users to annotate? Upload the entire output folder to Google Drive
 
 ---
 
-## Extract MaxN
+## Step 2: Compute MaxN
 
-You have cleaned all annotations — time to generate MaxN!
+Once you have reviewed all track screenshots, it's time to generate MaxN.
 
 1. Open Terminal at the `sharktrack` folder (same as when running the model in the [User Guide](/sharktrack/user-guide/))
 2. Activate the virtual environment:
@@ -147,23 +141,20 @@ source venv/bin/activate
 3. Run the MaxN computation:
 
 ```bash
-python utils/compute_maxn.py --path <output_path>
+python utils/compute_maxn.py
 ```
 
-Replace `<output_path>` with the path of the folder containing `output.csv` and all detection folders.
+You will be asked for:
+- the path to your output folder (the one you just reviewed)
+- the path to the folder containing the original videos (optional, used to compute visualisations)
 
-**Example:**
-```bash
-python utils/compute_maxn.py --path output
-```
+> You will see a new folder called **`analysed`**, with the `maxn.csv` file, as well as subfolders showing you the visualisations of MaxN per each video.
+
+![Example MaxN Visualisation](../../../assets/sharktrack/maxn-visualisation.jpg)
 
 <Aside type="tip">
-  You can optionally provide a path to the original videos to output MaxN `.jpg` frames.
+  If a result looks off, go back to Step 1 and double-check the track screenshots for that video (especially borderline false positives).
 </Aside>
-
-You will see a `maxn.csv` file in the SharkTrack folder.
-
-🚀 **Hooray! You have obtained the MaxN!**
 
 ---
 
@@ -175,17 +166,11 @@ You will see a `maxn.csv` file in the SharkTrack folder.
 
 ---
 
-## Navigation
+## Now Jump to the Code!
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-  <LinkCard
-    title="← User Guide"
-    description="Back to installation and running SharkTrack."
-    href="/sharktrack/user-guide/"
-  />
-  <LinkCard
-    title="← Overview"
-    description="Back to the SharkTrack landing page."
-    href="/sharktrack/"
-  />
-</div>
+<LinkCard
+  title="GitHub"
+  description="Access the code and model."
+  href="https://github.com/filippovarini/sharktrack"
+  target="_blank"
+/>
