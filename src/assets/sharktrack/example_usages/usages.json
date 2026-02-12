@@ -8,6 +8,14 @@
     "image": "/src/assets/sharktrack/example_usages/anguilla.jpg"
   },
   {
+    "name": "Bahamas",
+    "lat": 23.97,
+    "lng": -77.43,
+    "description": "Great work on deep sea sharks led by Grace Long together with, Michelle Taylor, Lauren Hayward, Leanne Hepburn and Austin Gallagher at Beneath The Waves",
+    "link": "https://www.linkedin.com/posts/filippo-varini_sharktrack-being-used-on-these-beautiful-activity-7354858347012980736-KN52?utm_source=share&utm_medium=member_desktop&rcm=ACoAADJk4VQB__eLIZkcUTux2NOEDolxu6gdf_E",
+    "image": "/src/assets/sharktrack/example_usages/bahamas.jpeg"
+  },
+  {
     "name": "Revillagigedo, Mexico",
     "lat": 18.83,
     "lng": -110.98,
